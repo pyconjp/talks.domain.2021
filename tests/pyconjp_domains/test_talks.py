@@ -112,6 +112,11 @@ class TalkTestCase(TestCase):
 
         self.assertEqual(actual, "Pythonのunittestを使った経験")
 
+    def test_take_away(self):
+        actual = self.talk.take_away
+
+        self.assertEqual(actual, "テストを先に書いてRed\r\n実装してGreenという体験")
+
 
 class TalksTestCase(TestCase):
     def test_from_raw_json(self):

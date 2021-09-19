@@ -114,6 +114,10 @@ class Talk:
     def prior_knowledge(self):
         return self.answer.audience_prior_knowledge
 
+    @property
+    def take_away(self):
+        return self.answer.audience_take_away
+
 
 @dataclass
 class Talks(Sequence):
