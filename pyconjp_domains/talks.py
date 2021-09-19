@@ -90,6 +90,10 @@ class Talk:
     answer: QuestionAnswer
     speakers: list[Speaker]
 
+    @property
+    def track(self):
+        return self.category.track
+
 
 @dataclass
 class Talks(Sequence):
