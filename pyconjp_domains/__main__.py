@@ -39,9 +39,27 @@ def retrieve_talks_in_timetable(output):
         row[-2] = ", ".join(row[-2])  # スピーカーが2人以上の場合は区切る
         row[-1] = "\n\n".join(row[-1])
 
+    headers = (
+        "id",
+        "title",
+        "room",
+        "day",
+        "start_time",
+        "no",
+        "elevator_pitch",
+        "prerequisite_knowledge",
+        "audience_takeaway",
+        "audience_python_level",
+        "track",
+        "lang_of_talk",
+        "lang_of_slide",
+        "description",
+        "name",
+        "profile",
+    )
     with open(output, "w", encoding="utf-8") as f:
         writer = csv.writer(f)
-        writer.writerows(rows)
+        writer.writerows([headers] + rows)
 
 
 if __name__ == "__main__":
