@@ -62,6 +62,32 @@ class QuestionAnswerTestCase(TestCase):
         self.assertEqual(actual, expected)
 
 
+class TalkTestCase(TestCase):
+    def setUp(self):
+        self.talk = t.Talk(
+            123456,
+            "Talkのプロパティのテスト",
+            "テストテストテスト",
+            t.Category(
+                "Web programming",
+                "Intermediate",
+                "Japanese",
+                "Japanese only",
+            ),
+            t.QuestionAnswer(
+                "プロパティを作ります",
+                "Pythonのunittestを使った経験",
+                "テストを先に書いてRed\r\n実装してGreenという体験",
+            ),
+            [t.Speaker("すごい人")],
+        )
+
+    def test_track(self):
+        actual = self.talk.track
+
+        self.assertEqual(actual, "Web programming")
+
+
 class TalksTestCase(TestCase):
     def test_from_raw_json(self):
         data = [
