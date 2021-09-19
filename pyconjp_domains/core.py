@@ -18,7 +18,8 @@ def fetch_data(url):
 
 
 def is_included(title):
-    patterns = ["Venue open", "スペシャルブース紹介", "Ask the speaker", "Break"]
+    # 休憩時間はタイムテーブルに含めない
+    patterns = ["スペシャルブース", "Ask the speaker", "Break"]
     for pattern in patterns:
         if title.startswith(pattern):
             return False

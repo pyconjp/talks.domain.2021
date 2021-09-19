@@ -10,6 +10,7 @@ class FilterSessionsTestCase(TestCase):
             {"title": "Opening (Day 1)"},
             {"title": "基調講演"},
             {"title": "スペシャルブース紹介"},
+            {"title": "スペシャルブース訪問"},
             {"title": "スロット1・ルーム1のトーク"},
             {"title": "スロット1・ルーム2のトーク"},
             {"title": "Ask the speaker / スペシャルブース"},
@@ -21,6 +22,7 @@ class FilterSessionsTestCase(TestCase):
             {"title": "Closing (Day1)"},
         ]
         expected = [
+            {"title": "Venue open"},
             {"title": "Opening (Day 1)"},
             {"title": "基調講演"},
             {"title": "スロット1・ルーム1のトーク"},
