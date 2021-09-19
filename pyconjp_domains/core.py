@@ -1,4 +1,5 @@
 import json
+from collections import defaultdict
 from datetime import datetime
 from urllib.request import urlopen
 
@@ -39,3 +40,19 @@ def create_category_id_value_map(category_data):
 
 def date_from_string(string):
     return datetime.strptime(string, "%Y-%m-%dT%H:%M:%S").date()
+
+
+def create_date_string_to_slot_number_map(date_strings):
+    date_string_to_slot_number_map = {}
+
+    date_to_strings_map = defaultdict(list)
+    for date_string in date_strings:
+        date = date_from_string(date_string)
+        date_to_strings_map[date].append(date_string)
+
+    for date_strings in date_to_strings_map.values():
+        date_string_to_slot_number_map.update(
+            {s: i for i, s in enumerate(sorted(date_strings), start=1)}
+        )
+
+    return date_string_to_slot_number_map
