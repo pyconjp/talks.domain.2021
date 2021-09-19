@@ -212,3 +212,7 @@ class ScheduledTalk(Talk):
     @property
     def room(self):
         return self.slot.room
+
+    @property
+    def day(self):
+        return self.slot.day

@@ -226,3 +226,8 @@ class ScheduledTalkTestCase(TestCase):
         actual = self.talk.room
 
         self.assertEqual(actual, "#pyconjp_1")
+
+    def test_day(self):
+        actual = self.talk.day
+
+        self.assertEqual(actual, date(2021, 10, 15))
