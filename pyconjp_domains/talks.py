@@ -123,6 +123,10 @@ class Talk:
     def speaker_names(self):
         return [spaeker.name for spaeker in self.speakers]
 
+    @property
+    def speaker_profiles(self):
+        return [speaker.profile for speaker in self.speakers]
+
 
 @dataclass
 class Talks(Sequence):
