@@ -118,6 +118,10 @@ class Talk:
     def take_away(self):
         return self.answer.audience_take_away
 
+    @property
+    def speaker_names(self):
+        return [spaeker.name for spaeker in self.speakers]
+
 
 @dataclass
 class Talks(Sequence):
