@@ -68,6 +68,28 @@ class CreateCategoryIdValueMapTestCase(TestCase):
         self.assertEqual(actual, expected)
 
 
+class CreateDateStringToSlotNumberMapTestCase(TestCase):
+    def test_create_map(self):
+        date_strings = set(
+            [
+                "2021-10-15T15:00:00",
+                "2021-10-15T16:00:00",
+                "2021-10-16T15:50:00",
+                "2021-10-16T13:50:00",
+            ]
+        )
+        expected = {
+            "2021-10-15T15:00:00": 1,
+            "2021-10-15T16:00:00": 2,
+            "2021-10-16T13:50:00": 1,
+            "2021-10-16T15:50:00": 2,
+        }
+
+        actual = c.create_date_string_to_slot_number_map(date_strings)
+
+        self.assertEqual(actual, expected)
+
+
 class DateFromStringTestCase(TestCase):
     def test_return_date(self):
         from datetime import date
