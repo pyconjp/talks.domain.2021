@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from collections.abc import Sequence
 from dataclasses import dataclass
-from datetime import date
+from datetime import date, time
 
 
 def get_single_choice_category_value(category: dict) -> str:
@@ -205,6 +205,7 @@ class Talks(Sequence):
 class Slot:
     room: str
     day: date
+    start: time
     number: int
 
 

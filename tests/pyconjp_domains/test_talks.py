@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, time
 from unittest import TestCase
 
 from pyconjp_domains import talks as t
@@ -216,7 +216,7 @@ class ScheduledTalkTestCase(TestCase):
                 "テストを先に書いてRed\r\n実装してGreenという体験",
             ),
             [t.Speaker("すごい人", "いくつかのすごい経歴")],
-            t.Slot("#pyconjp_1", date(2021, 10, 15), 2),
+            t.Slot("#pyconjp_1", date(2021, 10, 15), time(13, 30), 2),
         )
         self.fields = [
             "id",
@@ -285,7 +285,7 @@ class ScheduledTalkTestCase(TestCase):
             None,
             None,
             [],
-            t.Slot("plenary", date(2021, 10, 16), 3),
+            t.Slot("plenary", date(2021, 10, 16), time(12, 40), 3),
         )
         expected = [
             "0b9f27cc-9da4-4010-9c8e-9d24d31956d4",
