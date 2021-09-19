@@ -202,7 +202,7 @@ class Talks(Sequence):
 class Slot:
     room: str
     day: date
-    no: int
+    number: int
 
 
 @dataclass
@@ -216,3 +216,7 @@ class ScheduledTalk(Talk):
     @property
     def day(self):
         return self.slot.day
+
+    @property
+    def slot_number(self):
+        return self.slot.number
