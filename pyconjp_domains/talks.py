@@ -222,5 +222,9 @@ class ScheduledTalk(Talk):
         return self.slot.day
 
     @property
+    def start_time(self):
+        return self.slot.start
+
+    @property
     def slot_number(self):
         return self.slot.number

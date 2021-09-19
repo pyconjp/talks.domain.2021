@@ -249,6 +249,11 @@ class ScheduledTalkTestCase(TestCase):
 
         self.assertEqual(actual, date(2021, 10, 15))
 
+    def test_start_time(self):
+        actual = self.talk.start_time
+
+        self.assertEqual(actual, time(13, 30))
+
     def test_slot_number(self):
         actual = self.talk.slot_number
 
