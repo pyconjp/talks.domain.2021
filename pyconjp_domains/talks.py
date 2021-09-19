@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from collections.abc import Sequence
 from dataclasses import dataclass
+from datetime import date
 
 
 def get_single_choice_category_value(category: dict) -> str:
@@ -195,3 +196,15 @@ class Talks(Sequence):
                 or t.category.slide_language != "Japanese only"
             ]
         return self.__class__(talks)
+
+
+@dataclass
+class Slot:
+    room: str
+    day: date
+    no: int
+
+
+@dataclass
+class ScheduledTalk(Talk):
+    slot: Slot
