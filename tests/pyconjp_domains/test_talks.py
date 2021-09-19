@@ -218,6 +218,23 @@ class ScheduledTalkTestCase(TestCase):
             [t.Speaker("すごい人", "いくつかのすごい経歴")],
             t.Slot("#pyconjp_1", date(2021, 10, 15), 2),
         )
+        self.fields = [
+            "id",
+            "title",
+            "room",
+            "day",
+            "slot_number",
+            "elevator_pitch",
+            "prior_knowledge",
+            "take_away",
+            "level",
+            "track",
+            "speaking_language",
+            "slide_language",
+            "description",
+            "speaker_names",
+            "speaker_profiles",
+        ]
 
     def test_inheritance(self):
         self.assertIsInstance(self.talk, t.Talk)
@@ -236,3 +253,26 @@ class ScheduledTalkTestCase(TestCase):
         actual = self.talk.slot_number
 
         self.assertEqual(actual, 2)
+
+    def test_as_list(self):
+        expected = [
+            123456,
+            "ScheduledTalkのプロパティのテスト",
+            "#pyconjp_1",
+            date(2021, 10, 15),
+            2,
+            "継承して属性を追加します",
+            "Pythonのunittestを使った経験",
+            "テストを先に書いてRed\r\n実装してGreenという体験",
+            "beginner",
+            "Web programming",
+            "English",
+            "Both",
+            "テストプロパティテスト",
+            ["すごい人"],
+            ["いくつかのすごい経歴"],
+        ]
+
+        actual = self.talk.as_list(self.fields)
+
+        self.assertEqual(actual, expected)
