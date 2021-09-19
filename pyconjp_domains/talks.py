@@ -102,6 +102,10 @@ class Talk:
     def speaking_language(self):
         return self.category.speaking_language
 
+    @property
+    def slide_language(self):
+        return self.category.slide_language
+
 
 @dataclass
 class Talks(Sequence):
