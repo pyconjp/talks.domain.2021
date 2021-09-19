@@ -1,3 +1,4 @@
+from datetime import date
 from unittest import TestCase
 
 from pyconjp_domains import talks as t
@@ -195,3 +196,28 @@ class TalksTestCase(TestCase):
         actual = t.Talks.from_raw_json(data)
 
         self.assertEqual(actual, expected)
+
+
+class ScheduledTalkTestCase(TestCase):
+    def setUp(self):
+        self.talk = t.ScheduledTalk(
+            123456,
+            "ScheduledTalkのプロパティのテスト",
+            "テストプロパティテスト",
+            t.Category(
+                "Web programming",
+                "beginner",
+                "English",
+                "Both",
+            ),
+            t.QuestionAnswer(
+                "継承して属性を追加します",
+                "Pythonのunittestを使った経験",
+                "テストを先に書いてRed\r\n実装してGreenという体験",
+            ),
+            [t.Speaker("すごい人", "いくつかのすごい経歴")],
+            t.Slot("#pyconjp_1", date(2021, 10, 15), 2),
+        )
+
+    def test_inheritance(self):
+        self.assertIsInstance(self.talk, t.Talk)
