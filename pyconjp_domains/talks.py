@@ -12,6 +12,7 @@ def get_single_choice_category_value(category: dict) -> str:
 @dataclass
 class Speaker:
     name: str
+    profile: str | None = None
 
 
 @dataclass

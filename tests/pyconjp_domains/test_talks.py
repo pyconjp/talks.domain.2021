@@ -79,7 +79,7 @@ class TalkTestCase(TestCase):
                 "Pythonのunittestを使った経験",
                 "テストを先に書いてRed\r\n実装してGreenという体験",
             ),
-            [t.Speaker("すごい人")],
+            [t.Speaker("すごい人", "いくつかのすごい経歴")],
         )
 
     def test_track(self):
@@ -121,6 +121,11 @@ class TalkTestCase(TestCase):
         actual = self.talk.speaker_names
 
         self.assertEqual(actual, ["すごい人"])
+
+    def test_speaker_profiles(self):
+        actual = self.talk.speaker_profiles
+
+        self.assertEqual(actual, ["いくつかのすごい経歴"])
 
 
 class TalksTestCase(TestCase):
