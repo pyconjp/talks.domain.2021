@@ -87,6 +87,11 @@ class TalkTestCase(TestCase):
 
         self.assertEqual(actual, "Web programming")
 
+    def test_level(self):
+        actual = self.talk.level
+
+        self.assertEqual(actual, "Intermediate")
+
 
 class TalksTestCase(TestCase):
     def test_from_raw_json(self):

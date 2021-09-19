@@ -94,6 +94,10 @@ class Talk:
     def track(self):
         return self.category.track
 
+    @property
+    def level(self):
+        return self.category.level
+
 
 @dataclass
 class Talks(Sequence):
