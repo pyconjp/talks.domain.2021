@@ -53,6 +53,10 @@ def date_from_string(string):
     return datetime.strptime(string, "%Y-%m-%dT%H:%M:%S").date()
 
 
+def time_from_string(string):
+    return datetime.strptime(string, "%Y-%m-%dT%H:%M:%S").time()
+
+
 def create_date_string_to_slot_number_map(date_strings):
     date_string_to_slot_number_map = {}
 
@@ -84,6 +88,7 @@ def create_talks_from_data(data):
         slot = Slot(
             room_id_name_map[session["roomId"]],
             date_from_string(session["startsAt"]),
+            time_from_string(session["startsAt"]),
             start_to_slot_number_map[session["startsAt"]],
         )
         if session["isServiceSession"]:
