@@ -28,3 +28,9 @@ def create_room_id_name_map(room_data):
 
 def create_speaker_id_map(speaker_data):
     return {d["id"]: Speaker(d["fullName"], d["bio"]) for d in speaker_data}
+
+
+def create_category_id_value_map(category_data):
+    return {
+        item["id"]: item["name"] for d in category_data for item in d["items"]
+    }
