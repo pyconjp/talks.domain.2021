@@ -3,7 +3,13 @@ from collections import defaultdict
 from datetime import datetime
 from urllib.request import urlopen
 
-from pyconjp_domains.talks import Speaker
+from pyconjp_domains.talks import (
+    Category,
+    QuestionAnswer,
+    ScheduledTalk,
+    Slot,
+    Speaker,
+)
 
 
 def fetch_data(url):
@@ -38,6 +44,10 @@ def create_category_id_value_map(category_data):
     }
 
 
+def create_question_value_id_map(question_data):
+    return {d["question"]: d["id"] for d in question_data}
+
+
 def date_from_string(string):
     return datetime.strptime(string, "%Y-%m-%dT%H:%M:%S").date()
 
@@ -56,3 +66,67 @@ def create_date_string_to_slot_number_map(date_strings):
         )
 
     return date_string_to_slot_number_map
+
+
+def create_talks_from_data(data):
+    room_id_name_map = create_room_id_name_map(data["rooms"])
+    speaker_id_map = create_speaker_id_map(data["speakers"])
+    category_id_value_map = create_category_id_value_map(data["categories"])
+    question_value_id_map = create_question_value_id_map(data["questions"])
+
+    sessions = list(filter_sessions(data["sessions"]))
+    start_to_slot_number_map = create_date_string_to_slot_number_map(
+        set(s["startsAt"] for s in sessions)
+    )
+    talks = []
+    for session in sessions:
+        slot = Slot(
+            room_id_name_map[session["roomId"]],
+            date_from_string(session["startsAt"]),
+            start_to_slot_number_map[session["startsAt"]],
+        )
+        if session["isServiceSession"]:
+            talk = ScheduledTalk(
+                session["id"],
+                session["title"],
+                session["description"],
+                None,
+                None,
+                [],
+                slot,
+            )
+        else:
+            question_id_answer_map = {
+                d["questionId"]: d["answerValue"]
+                for d in session["questionAnswers"]
+            }
+            talk = ScheduledTalk(
+                session["id"],
+                session["title"],
+                session["description"],
+                Category(
+                    *(
+                        category_id_value_map[category_id]
+                        for category_id in session["categoryItems"]
+                    )
+                ),
+                QuestionAnswer(
+                    question_id_answer_map[
+                        question_value_id_map["Elevator Pitch"]
+                    ],
+                    question_id_answer_map[
+                        question_value_id_map["オーディエンスに求める前提知識"]
+                    ],
+                    question_id_answer_map[
+                        question_value_id_map["オーディエンスが持って帰れる具体的な知識やノウハウ"]
+                    ],
+                ),
+                [
+                    speaker_id_map[speaker_id]
+                    for speaker_id in session["speakers"]
+                ],
+                slot,
+            )
+        talks.append(talk)
+
+    return talks
