@@ -128,6 +128,9 @@ class Talk:
     def speaker_profiles(self):
         return [speaker.profile for speaker in self.speakers]
 
+    def as_list(self, fields):
+        return [getattr(self, field) for field in fields]
+
 
 @dataclass
 class Talks(Sequence):
