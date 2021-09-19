@@ -276,3 +276,35 @@ class ScheduledTalkTestCase(TestCase):
         actual = self.talk.as_list(self.fields)
 
         self.assertEqual(actual, expected)
+
+    def test_service_session_as_list(self):
+        service_session = t.ScheduledTalk(
+            "0b9f27cc-9da4-4010-9c8e-9d24d31956d4",
+            "Opening (Day1)",
+            None,
+            None,
+            None,
+            [],
+            t.Slot("plenary", date(2021, 10, 16), 3),
+        )
+        expected = [
+            "0b9f27cc-9da4-4010-9c8e-9d24d31956d4",
+            "Opening (Day1)",
+            "plenary",
+            date(2021, 10, 16),
+            3,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            [],
+            [],
+        ]
+
+        actual = service_session.as_list(self.fields)
+
+        self.assertEqual(actual, expected)
