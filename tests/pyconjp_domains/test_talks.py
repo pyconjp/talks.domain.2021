@@ -102,6 +102,11 @@ class TalkTestCase(TestCase):
 
         self.assertEqual(actual, "Japanese only")
 
+    def test_elevator_pitch(self):
+        actual = self.talk.elevator_pitch
+
+        self.assertEqual(actual, "プロパティを作ります")
+
 
 class TalksTestCase(TestCase):
     def test_from_raw_json(self):
