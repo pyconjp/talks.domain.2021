@@ -221,3 +221,8 @@ class ScheduledTalkTestCase(TestCase):
 
     def test_inheritance(self):
         self.assertIsInstance(self.talk, t.Talk)
+
+    def test_room(self):
+        actual = self.talk.room
+
+        self.assertEqual(actual, "#pyconjp_1")

@@ -208,3 +208,7 @@ class Slot:
 @dataclass
 class ScheduledTalk(Talk):
     slot: Slot
+
+    @property
+    def room(self):
+        return self.slot.room
