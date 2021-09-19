@@ -85,40 +85,40 @@ class QuestionAnswer:
 
 @dataclass
 class Talk:
-    id: int
+    id: int | str
     title: str
-    description: str
-    category: Category
-    answer: QuestionAnswer
+    description: str | None
+    category: Category | None
+    answer: QuestionAnswer | None
     speakers: list[Speaker]
 
     @property
     def track(self):
-        return self.category.track
+        return self.category.track if self.category else None
 
     @property
     def level(self):
-        return self.category.level
+        return self.category.level if self.category else None
 
     @property
     def speaking_language(self):
-        return self.category.speaking_language
+        return self.category.speaking_language if self.category else None
 
     @property
     def slide_language(self):
-        return self.category.slide_language
+        return self.category.slide_language if self.category else None
 
     @property
     def elevator_pitch(self):
-        return self.answer.elevator_pitch
+        return self.answer.elevator_pitch if self.answer else None
 
     @property
     def prior_knowledge(self):
-        return self.answer.audience_prior_knowledge
+        return self.answer.audience_prior_knowledge if self.answer else None
 
     @property
     def take_away(self):
-        return self.answer.audience_take_away
+        return self.answer.audience_take_away if self.answer else None
 
     @property
     def speaker_names(self):
