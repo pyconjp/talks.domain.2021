@@ -136,3 +136,8 @@ def create_talks_from_data(data):
         talks.append(talk)
 
     return talks
+
+
+def fetch_talks(url):
+    data = fetch_data(url)
+    return create_talks_from_data(data)
