@@ -92,6 +92,11 @@ class TalkTestCase(TestCase):
 
         self.assertEqual(actual, "Intermediate")
 
+    def test_speaking_language(self):
+        actual = self.talk.speaking_language
+
+        self.assertEqual(actual, "Japanese")
+
 
 class TalksTestCase(TestCase):
     def test_from_raw_json(self):

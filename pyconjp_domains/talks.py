@@ -98,6 +98,10 @@ class Talk:
     def level(self):
         return self.category.level
 
+    @property
+    def speaking_language(self):
+        return self.category.speaking_language
+
 
 @dataclass
 class Talks(Sequence):
