@@ -110,6 +110,10 @@ class Talk:
     def elevator_pitch(self):
         return self.answer.elevator_pitch
 
+    @property
+    def prior_knowledge(self):
+        return self.answer.audience_prior_knowledge
+
 
 @dataclass
 class Talks(Sequence):

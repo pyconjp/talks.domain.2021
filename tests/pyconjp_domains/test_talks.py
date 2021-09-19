@@ -107,6 +107,11 @@ class TalkTestCase(TestCase):
 
         self.assertEqual(actual, "プロパティを作ります")
 
+    def test_prior_knowledge(self):
+        actual = self.talk.prior_knowledge
+
+        self.assertEqual(actual, "Pythonのunittestを使った経験")
+
 
 class TalksTestCase(TestCase):
     def test_from_raw_json(self):
