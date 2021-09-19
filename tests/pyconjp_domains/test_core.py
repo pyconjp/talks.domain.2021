@@ -66,3 +66,17 @@ class CreateCategoryIdValueMapTestCase(TestCase):
         actual = c.create_category_id_value_map(data)
 
         self.assertEqual(actual, expected)
+
+
+class DateFromStringTestCase(TestCase):
+    def test_return_date(self):
+        from datetime import date
+
+        strings = ["2021-10-15T15:00:00", "2021-10-16T15:50:00"]
+        expected_dates = [date(2021, 10, 15), date(2021, 10, 16)]
+
+        for string, expected in zip(strings, expected_dates):
+            with self.subTest(string=string, expected=expected):
+                actual = c.date_from_string(string)
+
+                self.assertEqual(actual, expected)

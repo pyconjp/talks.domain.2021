@@ -1,4 +1,5 @@
 import json
+from datetime import datetime
 from urllib.request import urlopen
 
 from pyconjp_domains.talks import Speaker
@@ -34,3 +35,7 @@ def create_category_id_value_map(category_data):
     return {
         item["id"]: item["name"] for d in category_data for item in d["items"]
     }
+
+
+def date_from_string(string):
+    return datetime.strptime(string, "%Y-%m-%dT%H:%M:%S").date()
