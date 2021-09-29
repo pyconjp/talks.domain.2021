@@ -25,6 +25,8 @@ def retrieve_talks_in_timetable(output):
         "speaking_language",
         "slide_language",
         "description",
+        "slide_url",
+        "recording_url",
         "speaker_names",
         "speaker_profiles",
     ]
@@ -54,6 +56,8 @@ def retrieve_talks_in_timetable(output):
         "lang_of_talk",
         "lang_of_slide",
         "description",
+        "slide_url",
+        "recording_url",
         "name",
         "profile",
     )

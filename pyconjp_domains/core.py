@@ -132,6 +132,9 @@ def create_talks_from_data(data):
                     for speaker_id in session["speakers"]
                 ],
                 slot,
+                # Workaround: Use live URL as slide URL
+                session["liveUrl"],
+                session["recordingUrl"],
             )
         talks.append(talk)
 

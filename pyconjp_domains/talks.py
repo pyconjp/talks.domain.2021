@@ -212,6 +212,8 @@ class Slot:
 @dataclass
 class ScheduledTalk(Talk):
     slot: Slot
+    slide_url: str = ""
+    recording_url: str = ""
 
     @property
     def room(self):
