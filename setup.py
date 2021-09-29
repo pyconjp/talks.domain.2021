@@ -2,7 +2,7 @@ from setuptools import find_packages, setup
 
 setup(
     name="pyconjp_domains",
-    version="0.0.1",
+    version="0.0.2",
     packages=find_packages(exclude=["tests.*", "tests"]),
     python_requires=">=3.7",
     classifiers=[
