@@ -36,6 +36,46 @@ class CategoryTestCase(TestCase):
         self.assertEqual(actual, expected)
 
 
+class CategoryFactoryTestCase(TestCase):
+    def setUp(self):
+        self.item_to_category_title = {
+            80001: "Track",
+            80002: "Track",
+            80003: "Track",
+            80004: "Track",
+            80011: "Level",
+            80012: "Level",
+            80013: "Level",
+            80021: "Language",
+            80022: "Language",
+            80031: "発表資料の言語 / Language of presentation material",
+            80032: "発表資料の言語 / Language of presentation material",
+        }
+        self.category_id_to_name = {
+            80001: "Track1",
+            80002: "Track2",
+            80003: "Track3",
+            80004: "Track4",
+            80011: "Level1",
+            80012: "Level2",
+            80013: "Level3",
+            80021: "Language1",
+            80022: "Language2",
+            80031: "Slide Language1",
+            80032: "Slide Language2",
+        }
+
+    def test_init(self):
+        actual = t.CategoryFactory(
+            self.item_to_category_title, self.category_id_to_name
+        )
+
+        self.assertEqual(
+            actual.item_to_category_title, self.item_to_category_title
+        )
+        self.assertEqual(actual.category_id_to_name, self.category_id_to_name)
+
+
 class QuestionAnswerTestCase(TestCase):
     def test_flatten_raw_json(self):
         question_answers = [

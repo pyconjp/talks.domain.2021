@@ -54,6 +54,12 @@ class Category:
         return cls(**cls.flatten_raw_json(categories))
 
 
+class CategoryFactory:
+    def __init__(self, item_to_category_title, category_id_to_name):
+        self.item_to_category_title = item_to_category_title
+        self.category_id_to_name = category_id_to_name
+
+
 @dataclass
 class QuestionAnswer:
     elevator_pitch: str
