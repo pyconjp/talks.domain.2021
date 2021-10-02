@@ -105,6 +105,9 @@ def create_talks_from_data(data):
             # モーダル表示しないトークは、CSVのno (=talk.slot_number) を0にする
             start_to_slot_number_map.get(session["startsAt"], 0),
         )
+        duration_min = calculate_duration_min(
+            session["startsAt"], session["endsAt"]
+        )
         if session["isServiceSession"]:
             talk = ScheduledTalk(
                 session["id"],
@@ -114,6 +117,7 @@ def create_talks_from_data(data):
                 None,
                 [],
                 slot,
+                duration_min,
             )
         else:
             question_id_answer_map = {
@@ -146,6 +150,7 @@ def create_talks_from_data(data):
                     for speaker_id in session["speakers"]
                 ],
                 slot,
+                duration_min,
                 # Workaround: Use live URL as slide URL
                 session["liveUrl"],
                 session["recordingUrl"],
