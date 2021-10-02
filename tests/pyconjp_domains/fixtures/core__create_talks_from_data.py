@@ -229,7 +229,7 @@ expected = t.ScheduledTalks(
             None,
             None,
             [],
-            t.Slot("#pyconjp", the_day, time(12, 30), None),
+            t.Slot("#pyconjp", the_day, time(12, 30), 0),
         ),
         t.ScheduledTalk(
             opening_uuid,

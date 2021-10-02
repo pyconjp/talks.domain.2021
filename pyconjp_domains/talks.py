@@ -206,10 +206,10 @@ class Slot:
     room: str
     day: date
     start: time
-    number: int | None
+    number: int
 
     @classmethod
-    def create(cls, room: str, start_datetime_str: str, number: int | None):
+    def create(cls, room: str, start_datetime_str: str, number: int):
         start_datetime = datetime.strptime(
             start_datetime_str, "%Y-%m-%dT%H:%M:%S"
         )

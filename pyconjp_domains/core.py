@@ -93,8 +93,8 @@ def create_talks_from_data(data):
         slot = Slot.create(
             room_id_name_map[session["roomId"]],
             session["startsAt"],
-            # モーダル表示しないトークは、CSVのno (=talk.slot_number) を空にする
-            start_to_slot_number_map.get(session["startsAt"]),
+            # モーダル表示しないトークは、CSVのno (=talk.slot_number) を0にする
+            start_to_slot_number_map.get(session["startsAt"], 0),
         )
         if session["isServiceSession"]:
             talk = ScheduledTalk(
