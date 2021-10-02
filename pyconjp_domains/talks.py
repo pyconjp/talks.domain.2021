@@ -18,10 +18,10 @@ class Speaker:
 
 @dataclass
 class Category:
-    track: str
-    level: str
-    speaking_language: str
-    slide_language: str
+    track: str | None
+    level: str | None
+    speaking_language: str | None
+    slide_language: str | None
 
     @staticmethod
     def flatten_raw_json(categories: list[dict]) -> dict[str, str]:
@@ -58,6 +58,11 @@ class CategoryFactory:
     def __init__(self, item_to_category_title, category_id_to_name):
         self.item_to_category_title = item_to_category_title
         self.category_id_to_name = category_id_to_name
+
+    def create(self, values: list[int]) -> Category:
+        track, level = None, None
+        speaking_language, slide_language = None, None
+        return Category(track, level, speaking_language, slide_language)
 
 
 @dataclass
