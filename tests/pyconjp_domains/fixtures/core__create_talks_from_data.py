@@ -87,8 +87,8 @@ data = {
                 {"questionId": 30018, "answerValue": "トーク2の前提知識"},
             ],
             "roomId": 20007,
-            "liveUrl": "",
-            "recordingUrl": "",
+            "liveUrl": None,
+            "recordingUrl": None,
         },
         {
             "id": "203023",
@@ -105,8 +105,8 @@ data = {
                 {"questionId": 30018, "answerValue": "トーク3の前提知識"},
             ],
             "roomId": 20001,
-            "liveUrl": "",
-            "recordingUrl": "",
+            "liveUrl": None,
+            "recordingUrl": None,
         },
         {
             "id": "203001",
@@ -123,8 +123,8 @@ data = {
                 {"questionId": 30018, "answerValue": "トーク1の前提知識"},
             ],
             "roomId": 20001,
-            "liveUrl": "",
-            "recordingUrl": "",
+            "liveUrl": None,
+            "recordingUrl": None,
         },
         {
             "id": "203034",
@@ -141,8 +141,8 @@ data = {
                 {"questionId": 30018, "answerValue": "トーク4の前提知識"},
             ],
             "roomId": 20007,
-            "liveUrl": "",
-            "recordingUrl": "",
+            "liveUrl": None,
+            "recordingUrl": None,
         },
         {
             "id": closing_uuid,

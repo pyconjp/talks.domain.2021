@@ -220,8 +220,8 @@ class Slot:
 class ScheduledTalk(Talk):
     slot: Slot
     duration_min: int
-    slide_url: str = ""
-    recording_url: str = ""
+    slide_url: str | None = None
+    recording_url: str | None = None
 
     @property
     def room(self):
