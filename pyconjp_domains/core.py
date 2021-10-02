@@ -78,14 +78,14 @@ def create_talks_from_data(data):
 
     sessions = list(filter_sessions(data["sessions"]))
     start_to_slot_number_map = create_date_string_to_slot_number_map(
-        set(s["startsAt"] for s in sessions)
+        set(s["startsAt"] for s in sessions if "開場" not in s["title"])
     )
     talks = []
     for session in sessions:
         slot = Slot.create(
             room_id_name_map[session["roomId"]],
             session["startsAt"],
-            start_to_slot_number_map[session["startsAt"]],
+            start_to_slot_number_map.get(session["startsAt"]),
         )
         if session["isServiceSession"]:
             talk = ScheduledTalk(

@@ -1,5 +1,7 @@
 """このfixtureで表現しているタイムテーブル
 
+Venue open / 開場  # 注: モーダルを出さないのでSlot.numberは振られない
+
 Opening (Day 1)
 
 Keynote: Day 1 キーノートスピーカー
@@ -15,6 +17,7 @@ from datetime import date, time
 
 from pyconjp_domains import talks as t
 
+venue_open_uuid = "6a66fe7e-4a71-48b2-85ea-174d2ad98d92"
 opening_uuid = "353ae2e0-b3fe-4a76-adf1-b85f612833d2"
 keynote_uuid = "56c983c2-262e-4e4d-ba07-8f2496f2feba"
 closing_uuid = "9e0b7d58-f102-4453-9fbe-f1bd5eb47183"
@@ -26,6 +29,19 @@ speaker4_uuid = "0ead2886-0db3-44f2-ae29-2c2240adfc6b"
 
 data = {
     "sessions": [
+        {
+            "id": venue_open_uuid,
+            "title": "Venue open / 開場",
+            "description": None,
+            "startsAt": "2021-10-15T12:30:00",
+            "isServiceSession": True,
+            "speakers": [],
+            "categoryItems": [],
+            "questionAnswers": [],
+            "roomId": 20030,
+            "liveUrl": None,
+            "recordingUrl": None,
+        },
         {
             "id": opening_uuid,
             "title": "Opening (Day 1)",
@@ -206,6 +222,15 @@ the_day = date(2021, 10, 15)
 
 expected = t.ScheduledTalks(
     [
+        t.ScheduledTalk(
+            venue_open_uuid,
+            "Venue open / 開場",
+            None,
+            None,
+            None,
+            [],
+            t.Slot("#pyconjp", the_day, time(12, 30), None),
+        ),
         t.ScheduledTalk(
             opening_uuid,
             "Opening (Day 1)",
