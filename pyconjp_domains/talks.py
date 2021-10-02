@@ -245,4 +245,6 @@ class ScheduledTalks(Sequence):
         return self.talks[key]
 
     def sorted(self):
-        raise NotImplementedError
+        return self.__class__(
+            sorted(self.talks, key=lambda t: (t.day, t.slot_number, t.room))
+        )
