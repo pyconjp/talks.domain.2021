@@ -106,6 +106,16 @@ class DateFromStringTestCase(TestCase):
                 self.assertEqual(actual, expected)
 
 
+class CalculateDurationMinTestCase(TestCase):
+    def test_calculate(self):
+        start = "2021-10-15T17:00:00"
+        end = "2021-10-15T17:30:00"
+
+        actual = c.calculate_duration_min(start, end)
+
+        self.assertEqual(actual, 30)
+
+
 class CreateTalksFromDataTestCase(TestCase):
     def test_create_talks(self):
         from .fixtures.core__create_talks_from_data import data, expected

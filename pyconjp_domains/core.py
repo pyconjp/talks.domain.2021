@@ -78,6 +78,10 @@ def create_date_string_to_slot_number_map(date_strings):
     return date_string_to_slot_number_map
 
 
+def calculate_duration_min(start: str, end: str) -> int:
+    raise NotImplementedError
+
+
 def create_talks_from_data(data):
     room_id_name_map = create_room_id_name_map(data["rooms"])
     speaker_id_map = create_speaker_id_map(data["speakers"])
