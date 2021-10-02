@@ -315,6 +315,16 @@ class ScheduledTalkTestCase(TestCase):
         self.assertEqual(actual, expected)
 
 
+class SlotTestCase(TestCase):
+    def test_create(self):
+        start_datetime_str = "2021-10-15T15:00:00"
+        expected = t.Slot("the_room", date(2021, 10, 15), time(15, 0), 2)
+
+        actual = t.Slot.create("the_room", start_datetime_str, 2)
+
+        self.assertEqual(actual, expected)
+
+
 class ScheduledTalksTestCase(TestCase):
     def test_sorted(self):
         from .fixtures.talks__scheduled_talks__sorted import expected, talks

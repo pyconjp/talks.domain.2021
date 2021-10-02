@@ -208,6 +208,10 @@ class Slot:
     start: time
     number: int
 
+    @classmethod
+    def create(cls, room: str, start_datetime: str, number: int):
+        raise NotImplementedError
+
 
 @dataclass
 class ScheduledTalk(Talk):
