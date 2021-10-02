@@ -230,3 +230,16 @@ class ScheduledTalk(Talk):
     @property
     def slot_number(self):
         return self.slot.number
+
+
+@dataclass
+class ScheduledTalks(Sequence):
+    talks: list[ScheduledTalk]
+
+    def __len__(self):
+        return len(self.talks)
+
+    def __getitem__(self, key):
+        if isinstance(key, slice):
+            return self.__class__(self.talks[key])
+        return self.talks[key]
