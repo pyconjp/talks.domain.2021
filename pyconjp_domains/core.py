@@ -12,6 +12,8 @@ from pyconjp_domains.talks import (
     Speaker,
 )
 
+SESSIONIZE_DATETIME_FORMAT = "%Y-%m-%dT%H:%M:%S"
+
 
 def fetch_data(url):
     with urlopen(url) as res:
@@ -59,7 +61,7 @@ def create_question_value_id_map(question_data):
 
 
 def date_from_string(string):
-    return datetime.strptime(string, "%Y-%m-%dT%H:%M:%S").date()
+    return datetime.strptime(string, SESSIONIZE_DATETIME_FORMAT).date()
 
 
 def create_date_string_to_slot_number_map(date_strings):
@@ -79,7 +81,10 @@ def create_date_string_to_slot_number_map(date_strings):
 
 
 def calculate_duration_min(start: str, end: str) -> int:
-    raise NotImplementedError
+    start_datetime = datetime.strptime(start, SESSIONIZE_DATETIME_FORMAT)
+    end_datetime = datetime.strptime(end, SESSIONIZE_DATETIME_FORMAT)
+    duration = end_datetime - start_datetime
+    return duration.seconds // 60
 
 
 def create_talks_from_data(data):
