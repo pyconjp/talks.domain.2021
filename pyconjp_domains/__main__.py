@@ -35,6 +35,7 @@ def retrieve_talks_in_timetable(output):
     for row in rows:
         row[3] = row[3].strftime("%m/%d")
         row[4] = row[4].strftime("%H:%M")
+        row[5] = None if row[5] == 0 else row[5]
         row[-2] = ", ".join(row[-2])  # スピーカーが2人以上の場合は区切る
         row[-1] = "\n\n".join(row[-1])
 
