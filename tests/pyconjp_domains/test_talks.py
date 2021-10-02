@@ -217,6 +217,7 @@ class ScheduledTalkTestCase(TestCase):
             ),
             [t.Speaker("すごい人", "いくつかのすごい経歴")],
             t.Slot("#pyconjp_1", date(2021, 10, 15), time(13, 30), 2),
+            30,
         )
         self.fields = [
             "id",
@@ -232,6 +233,7 @@ class ScheduledTalkTestCase(TestCase):
             "speaking_language",
             "slide_language",
             "description",
+            "duration_min",
             "speaker_names",
             "speaker_profiles",
         ]
@@ -274,6 +276,7 @@ class ScheduledTalkTestCase(TestCase):
             "English",
             "Both",
             "テストプロパティテスト",
+            30,
             ["すごい人"],
             ["いくつかのすごい経歴"],
         ]
@@ -291,6 +294,7 @@ class ScheduledTalkTestCase(TestCase):
             None,
             [],
             t.Slot("plenary", date(2021, 10, 16), time(12, 40), 3),
+            30,
         )
         expected = [
             "0b9f27cc-9da4-4010-9c8e-9d24d31956d4",
@@ -306,6 +310,7 @@ class ScheduledTalkTestCase(TestCase):
             None,
             None,
             None,
+            30,
             [],
             [],
         ]

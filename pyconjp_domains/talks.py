@@ -219,6 +219,7 @@ class Slot:
 @dataclass
 class ScheduledTalk(Talk):
     slot: Slot
+    duration_min: int
     slide_url: str = ""
     recording_url: str = ""
 

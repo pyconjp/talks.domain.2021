@@ -230,6 +230,7 @@ expected = t.ScheduledTalks(
             None,
             [],
             t.Slot("#pyconjp", the_day, time(12, 30), 0),
+            30,
         ),
         t.ScheduledTalk(
             opening_uuid,
@@ -239,6 +240,7 @@ expected = t.ScheduledTalks(
             None,
             [],
             t.Slot("#pyconjp", the_day, time(13, 0), 1),
+            30,
         ),
         t.ScheduledTalk(
             keynote_uuid,
@@ -248,6 +250,7 @@ expected = t.ScheduledTalks(
             None,
             [],
             t.Slot("#pyconjp", the_day, time(13, 30), 2),
+            60,
         ),
         t.ScheduledTalk(
             "203012",
@@ -259,6 +262,7 @@ expected = t.ScheduledTalks(
             t.QuestionAnswer("トーク2のエレベータピッチ", "トーク2の前提知識", "トーク2で持ち帰れるもの"),
             [t.Speaker("スピーカー2", "プロフィール of スピーカー2")],
             t.Slot("#pyconjp_2", the_day, time(15, 0), 3),
+            30,
         ),
         t.ScheduledTalk(
             "203023",
@@ -270,6 +274,7 @@ expected = t.ScheduledTalks(
             t.QuestionAnswer("トーク3のエレベータピッチ", "トーク3の前提知識", "トーク3で持ち帰れるもの"),
             [t.Speaker("スピーカー3", "スピーカー3のプロフィール。")],
             t.Slot("#pyconjp_1", the_day, time(15, 0), 3),
+            30,
         ),
         t.ScheduledTalk(
             "203001",
@@ -281,6 +286,7 @@ expected = t.ScheduledTalks(
             t.QuestionAnswer("トーク1のエレベータピッチ", "トーク1の前提知識", "トーク1で持ち帰れるもの"),
             [t.Speaker("スピーカー1", "スピーカー1のプロフィール")],
             t.Slot("#pyconjp_1", the_day, time(17, 0), 4),
+            30,
         ),
         t.ScheduledTalk(
             "203034",
@@ -295,6 +301,7 @@ expected = t.ScheduledTalks(
             t.QuestionAnswer("トーク4のエレベータピッチ", "トーク4の前提知識", "トーク4で持ち帰れるもの"),
             [t.Speaker("スピーカー4", "プロフィール・オブ・スピーカー4")],
             t.Slot("#pyconjp_2", the_day, time(17, 0), 4),
+            30,
         ),
         t.ScheduledTalk(
             closing_uuid,
@@ -304,6 +311,7 @@ expected = t.ScheduledTalks(
             None,
             [],
             t.Slot("#pyconjp", the_day, time(18, 45), 5),
+            15,
         ),
     ]
 )

@@ -12,6 +12,7 @@ talks = t.ScheduledTalks(
             None,
             [],
             t.Slot("room2", date(2021, 10, 15), time(16, 0), 3),
+            30,
         ),
         t.ScheduledTalk(
             "102",
@@ -21,6 +22,7 @@ talks = t.ScheduledTalks(
             None,
             [],
             t.Slot("room1", date(2021, 10, 15), time(16, 0), 3),
+            30,
         ),
         t.ScheduledTalk(
             "103",
@@ -30,6 +32,7 @@ talks = t.ScheduledTalks(
             None,
             [],
             t.Slot("room", date(2021, 10, 16), time(14, 0), 1),
+            30,
         ),
         t.ScheduledTalk(
             "104",
@@ -39,6 +42,7 @@ talks = t.ScheduledTalks(
             None,
             [],
             t.Slot("room", date(2021, 10, 15), time(14, 0), 1),
+            30,
         ),
     ]
 )
@@ -52,6 +56,7 @@ expected = t.ScheduledTalks(
             None,
             [],
             t.Slot("room", date(2021, 10, 15), time(14, 0), 1),
+            30,
         ),
         t.ScheduledTalk(
             "102",
@@ -61,6 +66,7 @@ expected = t.ScheduledTalks(
             None,
             [],
             t.Slot("room1", date(2021, 10, 15), time(16, 0), 3),
+            30,
         ),
         t.ScheduledTalk(
             "101",
@@ -70,6 +76,7 @@ expected = t.ScheduledTalks(
             None,
             [],
             t.Slot("room2", date(2021, 10, 15), time(16, 0), 3),
+            30,
         ),
         t.ScheduledTalk(
             "103",
@@ -79,6 +86,7 @@ expected = t.ScheduledTalks(
             None,
             [],
             t.Slot("room", date(2021, 10, 16), time(14, 0), 1),
+            30,
         ),
     ]
 )
