@@ -32,6 +32,14 @@ def filter_sessions(sessions):
     return filter(lambda d: is_included(d["title"]), sessions)
 
 
+def _filter_with_modal_sessions(sessions):
+    """タイムテーブルでモーダル表示するsessionだけに絞り込む"""
+    # 「Venue open / 開場」だけモーダル表示しない
+    for session in sessions:
+        if "開場" not in session["title"]:
+            yield session
+
+
 def create_room_id_name_map(room_data):
     return {d["id"]: d["name"] for d in room_data}
 
@@ -78,13 +86,14 @@ def create_talks_from_data(data):
 
     sessions = list(filter_sessions(data["sessions"]))
     start_to_slot_number_map = create_date_string_to_slot_number_map(
-        set(s["startsAt"] for s in sessions if "開場" not in s["title"])
+        set(s["startsAt"] for s in _filter_with_modal_sessions(sessions))
     )
     talks = []
     for session in sessions:
         slot = Slot.create(
             room_id_name_map[session["roomId"]],
             session["startsAt"],
+            # モーダル表示しないトークは、CSVのno (=talk.slot_number) を空にする
             start_to_slot_number_map.get(session["startsAt"]),
         )
         if session["isServiceSession"]:
