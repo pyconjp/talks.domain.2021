@@ -62,6 +62,16 @@ class CategoryFactory:
     def create(self, values: list[int]) -> Category:
         track, level = None, None
         speaking_language, slide_language = None, None
+        for value in values:
+            category = self.item_to_category_title[value]
+            if category == "Track":
+                track = self.category_id_to_name[value]
+            elif category == "Level":
+                level = self.category_id_to_name[value]
+            elif category == "Language":
+                speaking_language = self.category_id_to_name[value]
+            elif category == "発表資料の言語 / Language of presentation material":
+                slide_language = self.category_id_to_name[value]
         return Category(track, level, speaking_language, slide_language)
 
 
