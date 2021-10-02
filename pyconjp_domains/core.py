@@ -7,6 +7,7 @@ from pyconjp_domains.talks import (
     Category,
     QuestionAnswer,
     ScheduledTalk,
+    ScheduledTalks,
     Slot,
     Speaker,
 )
@@ -138,7 +139,7 @@ def create_talks_from_data(data):
             )
         talks.append(talk)
 
-    return talks
+    return ScheduledTalks(talks)
 
 
 def fetch_talks(url):

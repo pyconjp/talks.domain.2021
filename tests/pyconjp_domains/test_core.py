@@ -104,3 +104,12 @@ class DateFromStringTestCase(TestCase):
                 actual = c.date_from_string(string)
 
                 self.assertEqual(actual, expected)
+
+
+class CreateTalksFromDataTestCase(TestCase):
+    def test_create_talks(self):
+        from .fixtures.core__create_talks_from_data import data, expected
+
+        actual = c.create_talks_from_data(data)
+
+        self.assertEqual(actual, expected)
