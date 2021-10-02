@@ -97,6 +97,16 @@ class CategoryFactoryTestCase(TestCase):
         )
         self.assertEqual(actual, expected)
 
+    def test_create_from_under_four_values(self):
+        sut = t.CategoryFactory(
+            self.item_to_category_title, self.category_id_to_name
+        )
+
+        actual = sut.create([80013, 80022])
+
+        expected = t.Category(None, "Level3", "Language2", None)
+        self.assertEqual(actual, expected)
+
 
 class QuestionAnswerTestCase(TestCase):
     def test_flatten_raw_json(self):
