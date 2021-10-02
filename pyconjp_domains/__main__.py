@@ -30,10 +30,7 @@ def retrieve_talks_in_timetable(output):
         "speaker_names",
         "speaker_profiles",
     ]
-    rows = [
-        talk.as_list(fields)
-        for talk in sorted(talks, key=lambda t: (t.day, t.slot_number, t.room))
-    ]
+    rows = [talk.as_list(fields) for talk in talks.sorted()]
 
     for row in rows:
         row[3] = row[3].strftime("%m/%d")
