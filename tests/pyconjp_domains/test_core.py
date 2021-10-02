@@ -25,6 +25,7 @@ class FilterSessionsTestCase(TestCase):
             {"title": "Venue open"},
             {"title": "Opening (Day 1)"},
             {"title": "基調講演"},
+            {"title": "スペシャルブース紹介"},
             {"title": "スロット1・ルーム1のトーク"},
             {"title": "スロット1・ルーム2のトーク"},
             {"title": "スロット2・ルーム1のトーク"},
