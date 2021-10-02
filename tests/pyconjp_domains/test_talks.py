@@ -313,3 +313,12 @@ class ScheduledTalkTestCase(TestCase):
         actual = service_session.as_list(self.fields)
 
         self.assertEqual(actual, expected)
+
+
+class ScheduledTalksTestCase(TestCase):
+    def test_sorted(self):
+        from .fixtures.talks__scheduled_talks__sorted import expected, talks
+
+        actual = talks.sorted()
+
+        self.assertEqual(actual, expected)

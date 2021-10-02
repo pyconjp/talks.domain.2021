@@ -243,3 +243,6 @@ class ScheduledTalks(Sequence):
         if isinstance(key, slice):
             return self.__class__(self.talks[key])
         return self.talks[key]
+
+    def sorted(self):
+        raise NotImplementedError
