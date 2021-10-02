@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from collections.abc import Sequence
 from dataclasses import dataclass
-from datetime import date, time
+from datetime import date, datetime, time
 
 
 def get_single_choice_category_value(category: dict) -> str:
@@ -209,8 +209,11 @@ class Slot:
     number: int
 
     @classmethod
-    def create(cls, room: str, start_datetime: str, number: int):
-        raise NotImplementedError
+    def create(cls, room: str, start_datetime_str: str, number: int):
+        start_datetime = datetime.strptime(
+            start_datetime_str, "%Y-%m-%dT%H:%M:%S"
+        )
+        return cls(room, start_datetime.date(), start_datetime.time(), number)
 
 
 @dataclass
