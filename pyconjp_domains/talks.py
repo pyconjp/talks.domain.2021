@@ -75,8 +75,28 @@ class CategoryFactory:
         return Category(track, level, speaking_language, slide_language)
 
     @classmethod
-    def from_(cls, categories_data):
-        raise NotImplementedError
+    def from_(cls, categories_raw_data):
+        item_id_to_category_title = cls._create_item_id_to_category_title_map(
+            categories_raw_data
+        )
+        item_id_to_name = cls._create_item_id_to_name_map(categories_raw_data)
+        return cls(item_id_to_category_title, item_id_to_name)
+
+    @staticmethod
+    def _create_item_id_to_category_title_map(categories_raw_data):
+        return {
+            item["id"]: d["title"]
+            for d in categories_raw_data
+            for item in d["items"]
+        }
+
+    @staticmethod
+    def _create_item_id_to_name_map(categories_raw_data):
+        return {
+            item["id"]: item["name"]
+            for d in categories_raw_data
+            for item in d["items"]
+        }
 
 
 @dataclass
