@@ -107,6 +107,53 @@ class CategoryFactoryTestCase(TestCase):
         expected = t.Category(None, "Level3", "Language2", None)
         self.assertEqual(actual, expected)
 
+    def test_from_(self):
+        categories_data = [
+            {
+                "id": 30061,
+                "title": "Track",
+                "items": [
+                    {"id": 80001, "name": "Track1"},
+                    {"id": 80002, "name": "Track2"},
+                    {"id": 80003, "name": "Track3"},
+                    {"id": 80004, "name": "Track4"},
+                ],
+            },
+            {
+                "id": 30062,
+                "title": "Level",
+                "items": [
+                    {"id": 80011, "name": "Level1"},
+                    {"id": 80012, "name": "Level2"},
+                    {"id": 80013, "name": "Level3"},
+                ],
+            },
+            {
+                "id": 30063,
+                "title": "Language",
+                "items": [
+                    {"id": 80021, "name": "Language1"},
+                    {"id": 80022, "name": "Language2"},
+                ],
+            },
+            {
+                "id": 30064,
+                "title": "発表資料の言語 / Language of presentation material",
+                "items": [
+                    {"id": 80031, "name": "Slide Language1"},
+                    {"id": 80032, "name": "Slide Language2"},
+                ],
+            },
+        ]
+
+        actual = t.CategoryFactory.from_(categories_data)
+
+        self.assertIsInstance(actual, t.CategoryFactory)
+        self.assertEqual(
+            actual.item_to_category_title, self.item_to_category_title
+        )
+        self.assertEqual(actual.category_id_to_name, self.category_id_to_name)
+
 
 class QuestionAnswerTestCase(TestCase):
     def test_flatten_raw_json(self):

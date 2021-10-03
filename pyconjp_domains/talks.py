@@ -74,6 +74,10 @@ class CategoryFactory:
                 slide_language = self.category_id_to_name[value]
         return Category(track, level, speaking_language, slide_language)
 
+    @classmethod
+    def from_(cls, categories_data):
+        raise NotImplementedError
+
 
 @dataclass
 class QuestionAnswer:
