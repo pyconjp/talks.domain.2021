@@ -10,6 +10,8 @@ Keynote: Day 1 キーノートスピーカー
 
 トーク1, トーク4
 
+スタッフが作成したSession
+
 Closing (Day 1)
 """
 
@@ -21,11 +23,13 @@ venue_open_uuid = "6a66fe7e-4a71-48b2-85ea-174d2ad98d92"
 opening_uuid = "353ae2e0-b3fe-4a76-adf1-b85f612833d2"
 keynote_uuid = "56c983c2-262e-4e4d-ba07-8f2496f2feba"
 closing_uuid = "9e0b7d58-f102-4453-9fbe-f1bd5eb47183"
+created_by_staff_uuid = "89546ef4-c434-4bb9-b0ba-8162d07d5e03"
 
 speaker1_uuid = "c6e3c83c-ef69-4203-882f-b9326e388e87"
 speaker2_uuid = "f3777251-0201-4048-abaa-1d234700e441"
 speaker3_uuid = "1b8d29d9-81c4-43a0-8794-76799d1a4abc"
 speaker4_uuid = "0ead2886-0db3-44f2-ae29-2c2240adfc6b"
+speaker_with_name_uuid = "89546ef4-c434-4bb9-b0ba-8162d07d5e03"
 
 data = {
     "sessions": [
@@ -145,6 +149,26 @@ data = {
             "recordingUrl": None,
         },
         {
+            "id": created_by_staff_uuid,
+            "title": "スタッフが作成したセッション",
+            "description": "スタッフが作りました（Acceptedのみでタイムテーブルに配置された）",
+            "startsAt": "2021-10-15T17:30:00",
+            "endsAt": "2021-10-15T18:30:00",
+            "isServiceSession": False,
+            "speakers": [speaker_with_name_uuid],
+            # スタッフアカウントが作るSessionではオプションなので長さが短くなる
+            "categoryItems": [80023, 80026],
+            "questionAnswers": [
+                {"questionId": 30014, "answerValue": "エレベータピッチだけ"},
+                # 可変長のCategoryの実装をまず終わらせるためにダミーのデータを用意
+                {"questionId": 30016, "answerValue": "TODO: Noneにする"},
+                {"questionId": 30018, "answerValue": "TODO: Noneにする"},
+            ],
+            "roomId": 20030,
+            "liveUrl": None,
+            "recordingUrl": None,
+        },
+        {
             "id": closing_uuid,
             "title": "Closing (Day 1)",
             "description": None,
@@ -164,6 +188,11 @@ data = {
         {"id": speaker2_uuid, "bio": "プロフィール of スピーカー2", "fullName": "スピーカー2"},
         {"id": speaker3_uuid, "bio": "スピーカー3のプロフィール。", "fullName": "スピーカー3"},
         {"id": speaker4_uuid, "bio": "プロフィール・オブ・スピーカー4", "fullName": "スピーカー4"},
+        {
+            "id": speaker_with_name_uuid,
+            "bio": None,
+            "fullName": "アカウントなしスピーカー",
+        },
     ],
     "questions": [
         {"id": 30014, "question": "Elevator Pitch"},
@@ -312,13 +341,23 @@ expected = t.ScheduledTalks(
             30,
         ),
         t.ScheduledTalk(
+            created_by_staff_uuid,
+            "スタッフが作成したセッション",
+            "スタッフが作りました（Acceptedのみでタイムテーブルに配置された）",
+            t.Category(None, None, "Japanese", "Japanese only"),
+            t.QuestionAnswer("エレベータピッチだけ", "TODO: Noneにする", "TODO: Noneにする"),
+            [t.Speaker("アカウントなしスピーカー", None)],
+            t.Slot("#pyconjp", the_day, time(17, 30), 5),
+            60,
+        ),
+        t.ScheduledTalk(
             closing_uuid,
             "Closing (Day 1)",
             None,
             None,
             None,
             [],
-            t.Slot("#pyconjp", the_day, time(18, 45), 5),
+            t.Slot("#pyconjp", the_day, time(18, 45), 6),
             15,
         ),
     ]
