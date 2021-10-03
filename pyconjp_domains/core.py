@@ -4,7 +4,7 @@ from datetime import datetime
 from urllib.request import urlopen
 
 from pyconjp_domains.talks import (
-    Category,
+    CategoryFactory,
     QuestionAnswer,
     ScheduledTalk,
     ScheduledTalks,
@@ -90,7 +90,7 @@ def calculate_duration_min(start: str, end: str) -> int:
 def create_talks_from_data(data):
     room_id_name_map = create_room_id_name_map(data["rooms"])
     speaker_id_map = create_speaker_id_map(data["speakers"])
-    category_id_value_map = create_category_id_value_map(data["categories"])
+    category_factory = CategoryFactory.from_(data["categories"])
     question_value_id_map = create_question_value_id_map(data["questions"])
 
     sessions = list(filter_sessions(data["sessions"]))
@@ -128,12 +128,7 @@ def create_talks_from_data(data):
                 session["id"],
                 session["title"],
                 session["description"],
-                Category(
-                    *(
-                        category_id_value_map[category_id]
-                        for category_id in session["categoryItems"]
-                    )
-                ),
+                category_factory.create(session["categoryItems"]),
                 QuestionAnswer(
                     question_id_answer_map[
                         question_value_id_map["Elevator Pitch"]
