@@ -1,3 +1,5 @@
+from pyconjp_domains.talks import Category
+
 categories_raw_data = [
     {
         "id": 30061,
@@ -63,3 +65,11 @@ item_id_to_name = {
     80031: "Slide Language1",
     80032: "Slide Language2",
 }
+
+create_parameters = ([], [80004, 80013, 80021, 80032], [80013, 80022])
+
+create_expecteds = (
+    Category(None, None, None, None),
+    Category("Track4", "Level3", "Language1", "Slide Language2"),
+    Category(None, "Level3", "Language2", None),
+)

@@ -56,37 +56,21 @@ class CategoryFactoryTestCase(TestCase):
         )
         self.assertEqual(actual._item_id_to_name, self.item_id_to_name)
 
-    def test_create_from_empty(self):
+    def test_create(self):
+        from .fixtures.talks__category_factory import (
+            create_expecteds,
+            create_parameters,
+        )
+
         sut = t.CategoryFactory(
             self.item_id_to_category_title, self.item_id_to_name
         )
 
-        actual = sut.create([])
+        for parameter, expected in zip(create_parameters, create_expecteds):
+            with self.subTest(parameter=parameter, expected=expected):
+                actual = sut.create(parameter)
 
-        expected = t.Category(None, None, None, None)
-        self.assertEqual(actual, expected)
-
-    def test_create_from_four_values(self):
-        sut = t.CategoryFactory(
-            self.item_id_to_category_title, self.item_id_to_name
-        )
-
-        actual = sut.create([80004, 80013, 80021, 80032])
-
-        expected = t.Category(
-            "Track4", "Level3", "Language1", "Slide Language2"
-        )
-        self.assertEqual(actual, expected)
-
-    def test_create_from_under_four_values(self):
-        sut = t.CategoryFactory(
-            self.item_id_to_category_title, self.item_id_to_name
-        )
-
-        actual = sut.create([80013, 80022])
-
-        expected = t.Category(None, "Level3", "Language2", None)
-        self.assertEqual(actual, expected)
+                self.assertEqual(actual, expected)
 
     def test_from_(self):
         from .fixtures.talks__category_factory import categories_raw_data
