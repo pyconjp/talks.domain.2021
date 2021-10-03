@@ -171,7 +171,7 @@ class Talk:
 
     @property
     def speaker_profiles(self):
-        return [speaker.profile for speaker in self.speakers]
+        return [speaker.profile or "" for speaker in self.speakers]
 
     def as_list(self, fields):
         return [getattr(self, field) for field in fields]
