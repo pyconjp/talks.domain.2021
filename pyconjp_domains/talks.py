@@ -101,9 +101,9 @@ class CategoryFactory:
 
 @dataclass
 class QuestionAnswer:
-    elevator_pitch: str
-    audience_prior_knowledge: str
-    audience_take_away: str
+    elevator_pitch: str | None
+    audience_prior_knowledge: str | None
+    audience_take_away: str | None
 
     @staticmethod
     def flatten_raw_json(question_answers: list[dict]) -> dict[str, str]:

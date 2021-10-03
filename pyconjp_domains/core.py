@@ -124,15 +124,15 @@ def create_talks_from_data(data):
                 session["description"],
                 category_factory.create(session["categoryItems"]),
                 QuestionAnswer(
-                    question_id_answer_map[
+                    question_id_answer_map.get(
                         question_value_id_map["Elevator Pitch"]
-                    ],
-                    question_id_answer_map[
+                    ),
+                    question_id_answer_map.get(
                         question_value_id_map["オーディエンスに求める前提知識"]
-                    ],
-                    question_id_answer_map[
+                    ),
+                    question_id_answer_map.get(
                         question_value_id_map["オーディエンスが持って帰れる具体的な知識やノウハウ"]
-                    ],
+                    ),
                 ),
                 [
                     speaker_id_map[speaker_id]

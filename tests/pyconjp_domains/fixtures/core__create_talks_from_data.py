@@ -160,9 +160,6 @@ data = {
             "categoryItems": [80023, 80026],
             "questionAnswers": [
                 {"questionId": 30014, "answerValue": "エレベータピッチだけ"},
-                # 可変長のCategoryの実装をまず終わらせるためにダミーのデータを用意
-                {"questionId": 30016, "answerValue": "TODO: Noneにする"},
-                {"questionId": 30018, "answerValue": "TODO: Noneにする"},
             ],
             "roomId": 20030,
             "liveUrl": None,
@@ -345,7 +342,7 @@ expected = t.ScheduledTalks(
             "スタッフが作成したセッション",
             "スタッフが作りました（Acceptedのみでタイムテーブルに配置された）",
             t.Category(None, None, "Japanese", "Japanese only"),
-            t.QuestionAnswer("エレベータピッチだけ", "TODO: Noneにする", "TODO: Noneにする"),
+            t.QuestionAnswer("エレベータピッチだけ", None, None),
             [t.Speaker("アカウントなしスピーカー", None)],
             t.Slot("#pyconjp", the_day, time(17, 30), 5),
             60,
