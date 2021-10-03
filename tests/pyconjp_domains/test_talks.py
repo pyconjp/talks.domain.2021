@@ -38,7 +38,7 @@ class CategoryTestCase(TestCase):
 
 class CategoryFactoryTestCase(TestCase):
     def setUp(self):
-        self.item_to_category_title = {
+        self.item_id_to_category_title = {
             80001: "Track",
             80002: "Track",
             80003: "Track",
@@ -51,7 +51,7 @@ class CategoryFactoryTestCase(TestCase):
             80031: "発表資料の言語 / Language of presentation material",
             80032: "発表資料の言語 / Language of presentation material",
         }
-        self.category_id_to_name = {
+        self.item_id_to_name = {
             80001: "Track1",
             80002: "Track2",
             80003: "Track3",
@@ -67,17 +67,17 @@ class CategoryFactoryTestCase(TestCase):
 
     def test_init(self):
         actual = t.CategoryFactory(
-            self.item_to_category_title, self.category_id_to_name
+            self.item_id_to_category_title, self.item_id_to_name
         )
 
         self.assertEqual(
-            actual.item_to_category_title, self.item_to_category_title
+            actual._item_id_to_category_title, self.item_id_to_category_title
         )
-        self.assertEqual(actual.category_id_to_name, self.category_id_to_name)
+        self.assertEqual(actual._item_id_to_name, self.item_id_to_name)
 
     def test_create_from_empty(self):
         sut = t.CategoryFactory(
-            self.item_to_category_title, self.category_id_to_name
+            self.item_id_to_category_title, self.item_id_to_name
         )
 
         actual = sut.create([])
@@ -87,7 +87,7 @@ class CategoryFactoryTestCase(TestCase):
 
     def test_create_from_four_values(self):
         sut = t.CategoryFactory(
-            self.item_to_category_title, self.category_id_to_name
+            self.item_id_to_category_title, self.item_id_to_name
         )
 
         actual = sut.create([80004, 80013, 80021, 80032])
@@ -99,7 +99,7 @@ class CategoryFactoryTestCase(TestCase):
 
     def test_create_from_under_four_values(self):
         sut = t.CategoryFactory(
-            self.item_to_category_title, self.category_id_to_name
+            self.item_id_to_category_title, self.item_id_to_name
         )
 
         actual = sut.create([80013, 80022])
@@ -150,9 +150,9 @@ class CategoryFactoryTestCase(TestCase):
 
         self.assertIsInstance(actual, t.CategoryFactory)
         self.assertEqual(
-            actual.item_to_category_title, self.item_to_category_title
+            actual._item_id_to_category_title, self.item_id_to_category_title
         )
-        self.assertEqual(actual.category_id_to_name, self.category_id_to_name)
+        self.assertEqual(actual._item_id_to_name, self.item_id_to_name)
 
 
 class QuestionAnswerTestCase(TestCase):

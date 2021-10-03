@@ -55,23 +55,23 @@ class Category:
 
 
 class CategoryFactory:
-    def __init__(self, item_to_category_title, category_id_to_name):
-        self.item_to_category_title = item_to_category_title
-        self.category_id_to_name = category_id_to_name
+    def __init__(self, item_id_to_category_title, item_id_to_name):
+        self._item_id_to_category_title = item_id_to_category_title
+        self._item_id_to_name = item_id_to_name
 
     def create(self, values: list[int]) -> Category:
         track, level = None, None
         speaking_language, slide_language = None, None
         for value in values:
-            category = self.item_to_category_title[value]
+            category = self._item_id_to_category_title[value]
             if category == "Track":
-                track = self.category_id_to_name[value]
+                track = self._item_id_to_name[value]
             elif category == "Level":
-                level = self.category_id_to_name[value]
+                level = self._item_id_to_name[value]
             elif category == "Language":
-                speaking_language = self.category_id_to_name[value]
+                speaking_language = self._item_id_to_name[value]
             elif category == "発表資料の言語 / Language of presentation material":
-                slide_language = self.category_id_to_name[value]
+                slide_language = self._item_id_to_name[value]
         return Category(track, level, speaking_language, slide_language)
 
     @classmethod
