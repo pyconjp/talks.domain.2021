@@ -263,7 +263,9 @@ class Slot:
 
 
 class SlotFactory:
-    pass
+    def __init__(self, room_id_to_name, start_to_slot_number):
+        self._room_id_to_name = room_id_to_name
+        self._start_to_slot_number = start_to_slot_number
 
 
 @dataclass
