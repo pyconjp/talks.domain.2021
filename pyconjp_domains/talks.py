@@ -274,6 +274,10 @@ class SlotFactory:
             self._start_to_slot_number.get(starts_at, 0),
         )
 
+    @classmethod
+    def from_(cls, rooms_raw_data, starts_at_strings) -> SlotFactory:
+        raise NotImplementedError
+
 
 @dataclass
 class ScheduledTalk(Talk):

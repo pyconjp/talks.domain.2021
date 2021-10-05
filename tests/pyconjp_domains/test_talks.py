@@ -418,6 +418,20 @@ class SlotFactoryTestCase(TestCase):
         self.assertEqual(actual, slot_create.return_value)
         slot_create.assert_called_once_with("#pyconjp_1", starts_at, 0)
 
+    def test_from_(self):
+        from .fixtures.talks__slot_factory import (
+            rooms_raw_data,
+            starts_at_strings,
+        )
+
+        actual = t.SlotFactory.from_(rooms_raw_data, starts_at_strings)
+
+        self.assertIsInstance(actual, t.SlotFactory)
+        self.assertEqual(actual._room_id_to_name, self.room_id_to_name)
+        self.assertEqual(
+            actual._start_to_slot_number, self.start_to_slot_number
+        )
+
 
 class ScheduledTalksTestCase(TestCase):
     def test_sorted(self):
