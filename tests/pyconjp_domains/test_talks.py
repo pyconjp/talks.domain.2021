@@ -407,6 +407,17 @@ class SlotFactoryTestCase(TestCase):
         self.assertEqual(actual, slot_create.return_value)
         slot_create.assert_called_once_with("#pyconjp", starts_at, 2)
 
+    @patch("pyconjp_domains.talks.Slot.create")
+    def test_create_key_error_starts_at(self, slot_create):
+        sut = t.SlotFactory(self.room_id_to_name, self.start_to_slot_number)
+        starts_at = "2021-10-15T12:30:00"
+        room_id = 20001
+
+        actual = sut.create(starts_at, room_id)
+
+        self.assertEqual(actual, slot_create.return_value)
+        slot_create.assert_called_once_with("#pyconjp_1", starts_at, 0)
+
 
 class ScheduledTalksTestCase(TestCase):
     def test_sorted(self):
