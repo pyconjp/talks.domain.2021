@@ -122,7 +122,9 @@ def create_talks_from_data(data):
                 session["id"],
                 session["title"],
                 session["description"],
-                category_factory.create(session["categoryItems"]),
+                category_factory.create(
+                    session["categoryItems"], session["isPlenumSession"]
+                ),
                 QuestionAnswer(
                     question_id_answer_map.get(
                         question_value_id_map["Elevator Pitch"]
