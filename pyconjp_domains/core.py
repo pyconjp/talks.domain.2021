@@ -3,9 +3,8 @@ from datetime import datetime
 from urllib.request import urlopen
 
 from pyconjp_domains.constants import SESSIONIZE_DATETIME_FORMAT
-from pyconjp_domains.factories import SlotFactory
+from pyconjp_domains.factories import CategoryFactory, SlotFactory
 from pyconjp_domains.talks import (
-    CategoryFactory,
     QuestionAnswer,
     ScheduledTalk,
     ScheduledTalks,

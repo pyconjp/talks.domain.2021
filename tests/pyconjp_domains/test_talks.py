@@ -36,54 +36,6 @@ class CategoryTestCase(TestCase):
         self.assertEqual(actual, expected)
 
 
-class CategoryFactoryTestCase(TestCase):
-    def setUp(self):
-        from .fixtures.talks__category_factory import (
-            item_id_to_category_title,
-            item_id_to_name,
-        )
-
-        self.item_id_to_category_title = item_id_to_category_title
-        self.item_id_to_name = item_id_to_name
-
-    def test_init(self):
-        actual = t.CategoryFactory(
-            self.item_id_to_category_title, self.item_id_to_name
-        )
-
-        self.assertEqual(
-            actual._item_id_to_category_title, self.item_id_to_category_title
-        )
-        self.assertEqual(actual._item_id_to_name, self.item_id_to_name)
-
-    def test_create(self):
-        from .fixtures.talks__category_factory import (
-            create_expecteds,
-            create_parameters,
-        )
-
-        sut = t.CategoryFactory(
-            self.item_id_to_category_title, self.item_id_to_name
-        )
-
-        for parameter, expected in zip(create_parameters, create_expecteds):
-            with self.subTest(parameter=parameter, expected=expected):
-                actual = sut.create(*parameter)
-
-                self.assertEqual(actual, expected)
-
-    def test_from_(self):
-        from .fixtures.talks__category_factory import categories_raw_data
-
-        actual = t.CategoryFactory.from_(categories_raw_data)
-
-        self.assertIsInstance(actual, t.CategoryFactory)
-        self.assertEqual(
-            actual._item_id_to_category_title, self.item_id_to_category_title
-        )
-        self.assertEqual(actual._item_id_to_name, self.item_id_to_name)
-
-
 class QuestionAnswerTestCase(TestCase):
     def test_flatten_raw_json(self):
         question_answers = [

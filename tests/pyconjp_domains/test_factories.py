@@ -5,6 +5,54 @@ from unittest.mock import patch
 from pyconjp_domains import factories as f
 
 
+class CategoryFactoryTestCase(TestCase):
+    def setUp(self):
+        from .fixtures.factories__category_factory import (
+            item_id_to_category_title,
+            item_id_to_name,
+        )
+
+        self.item_id_to_category_title = item_id_to_category_title
+        self.item_id_to_name = item_id_to_name
+
+    def test_init(self):
+        actual = f.CategoryFactory(
+            self.item_id_to_category_title, self.item_id_to_name
+        )
+
+        self.assertEqual(
+            actual._item_id_to_category_title, self.item_id_to_category_title
+        )
+        self.assertEqual(actual._item_id_to_name, self.item_id_to_name)
+
+    def test_create(self):
+        from .fixtures.factories__category_factory import (
+            create_expecteds,
+            create_parameters,
+        )
+
+        sut = f.CategoryFactory(
+            self.item_id_to_category_title, self.item_id_to_name
+        )
+
+        for parameter, expected in zip(create_parameters, create_expecteds):
+            with self.subTest(parameter=parameter, expected=expected):
+                actual = sut.create(*parameter)
+
+                self.assertEqual(actual, expected)
+
+    def test_from_(self):
+        from .fixtures.factories__category_factory import categories_raw_data
+
+        actual = f.CategoryFactory.from_(categories_raw_data)
+
+        self.assertIsInstance(actual, f.CategoryFactory)
+        self.assertEqual(
+            actual._item_id_to_category_title, self.item_id_to_category_title
+        )
+        self.assertEqual(actual._item_id_to_name, self.item_id_to_name)
+
+
 class SlotFactoryTestCase(TestCase):
     def setUp(self):
         from .fixtures.factories__slot_factory import (

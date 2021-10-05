@@ -4,7 +4,53 @@ from collections import defaultdict
 from datetime import date, datetime
 
 from pyconjp_domains.constants import SESSIONIZE_DATETIME_FORMAT
-from pyconjp_domains.talks import Slot
+from pyconjp_domains.talks import Category, Slot
+
+
+class CategoryFactory:
+    def __init__(self, item_id_to_category_title, item_id_to_name):
+        self._item_id_to_category_title = item_id_to_category_title
+        self._item_id_to_name = item_id_to_name
+
+    def create(self, values: list[int], is_plenary: bool) -> Category:
+        track, level = None, None
+        speaking_language, slide_language = None, None
+        for value in values:
+            category = self._item_id_to_category_title[value]
+            if category == "Track":
+                track = self._item_id_to_name[value]
+            elif category == "Level":
+                level = self._item_id_to_name[value]
+            elif category == "Language":
+                speaking_language = self._item_id_to_name[value]
+            elif category == "発表資料の言語 / Language of presentation material":
+                slide_language = self._item_id_to_name[value]
+        level = "All" if is_plenary else level
+        return Category(track, level, speaking_language, slide_language)
+
+    @classmethod
+    def from_(cls, categories_raw_data):
+        item_id_to_category_title = cls._create_item_id_to_category_title_map(
+            categories_raw_data
+        )
+        item_id_to_name = cls._create_item_id_to_name_map(categories_raw_data)
+        return cls(item_id_to_category_title, item_id_to_name)
+
+    @staticmethod
+    def _create_item_id_to_category_title_map(categories_raw_data):
+        return {
+            item["id"]: d["title"]
+            for d in categories_raw_data
+            for item in d["items"]
+        }
+
+    @staticmethod
+    def _create_item_id_to_name_map(categories_raw_data):
+        return {
+            item["id"]: item["name"]
+            for d in categories_raw_data
+            for item in d["items"]
+        }
 
 
 class SlotFactory:
