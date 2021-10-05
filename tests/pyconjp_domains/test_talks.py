@@ -382,23 +382,27 @@ class SlotTestCase(TestCase):
 class SlotFactoryTestCase(TestCase):
     def setUp(self):
         self.room_id_to_name = {20010: "#pyconjp", 20001: "#pyconjp_1"}
-        self.start_to_slot_number = {
+        self.starts_at_to_slot_number = {
             "2021-10-15T13:00:00": 1,
             "2021-10-15T13:30:00": 2,
             "2021-10-15T14:30:00": 3,
         }
 
     def test_init(self):
-        actual = t.SlotFactory(self.room_id_to_name, self.start_to_slot_number)
+        actual = t.SlotFactory(
+            self.room_id_to_name, self.starts_at_to_slot_number
+        )
 
         self.assertEqual(actual._room_id_to_name, self.room_id_to_name)
         self.assertEqual(
-            actual._start_to_slot_number, self.start_to_slot_number
+            actual._starts_at_to_slot_number, self.starts_at_to_slot_number
         )
 
     @patch("pyconjp_domains.talks.Slot.create")
     def test_create(self, slot_create):
-        sut = t.SlotFactory(self.room_id_to_name, self.start_to_slot_number)
+        sut = t.SlotFactory(
+            self.room_id_to_name, self.starts_at_to_slot_number
+        )
         starts_at = "2021-10-15T13:30:00"
         room_id = 20010
 
@@ -409,7 +413,9 @@ class SlotFactoryTestCase(TestCase):
 
     @patch("pyconjp_domains.talks.Slot.create")
     def test_create_key_error_starts_at(self, slot_create):
-        sut = t.SlotFactory(self.room_id_to_name, self.start_to_slot_number)
+        sut = t.SlotFactory(
+            self.room_id_to_name, self.starts_at_to_slot_number
+        )
         starts_at = "2021-10-15T12:30:00"
         room_id = 20001
 
@@ -429,7 +435,7 @@ class SlotFactoryTestCase(TestCase):
         self.assertIsInstance(actual, t.SlotFactory)
         self.assertEqual(actual._room_id_to_name, self.room_id_to_name)
         self.assertEqual(
-            actual._start_to_slot_number, self.start_to_slot_number
+            actual._starts_at_to_slot_number, self.starts_at_to_slot_number
         )
 
     def test_date_from_string(self):
@@ -442,8 +448,8 @@ class SlotFactoryTestCase(TestCase):
 
                 self.assertEqual(actual, expected)
 
-    def test__create_start_to_slot_number_map(self):
-        date_strings = set(
+    def test__create_datetime_string_to_slot_number_map(self):
+        datetime_strings = set(
             [
                 "2021-10-15T15:00:00",
                 "2021-10-15T16:00:00",
@@ -458,7 +464,9 @@ class SlotFactoryTestCase(TestCase):
             "2021-10-16T15:50:00": 2,
         }
 
-        actual = t.SlotFactory._create_start_to_slot_number_map(date_strings)
+        actual = t.SlotFactory._create_datetime_string_to_slot_number_map(
+            datetime_strings
+        )
 
         self.assertEqual(actual, expected)
 
