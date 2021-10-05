@@ -268,7 +268,11 @@ class SlotFactory:
         self._start_to_slot_number = start_to_slot_number
 
     def create(self, starts_at: str, room_id: int) -> Slot:
-        raise NotImplementedError
+        return Slot.create(
+            self._room_id_to_name[room_id],
+            starts_at,
+            self._start_to_slot_number[starts_at],
+        )
 
 
 @dataclass
