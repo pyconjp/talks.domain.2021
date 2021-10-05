@@ -442,6 +442,26 @@ class SlotFactoryTestCase(TestCase):
 
                 self.assertEqual(actual, expected)
 
+    def test__create_start_to_slot_number_map(self):
+        date_strings = set(
+            [
+                "2021-10-15T15:00:00",
+                "2021-10-15T16:00:00",
+                "2021-10-16T15:50:00",
+                "2021-10-16T13:50:00",
+            ]
+        )
+        expected = {
+            "2021-10-15T15:00:00": 1,
+            "2021-10-15T16:00:00": 2,
+            "2021-10-16T13:50:00": 1,
+            "2021-10-16T15:50:00": 2,
+        }
+
+        actual = t.SlotFactory._create_start_to_slot_number_map(date_strings)
+
+        self.assertEqual(actual, expected)
+
 
 class ScheduledTalksTestCase(TestCase):
     def test_sorted(self):

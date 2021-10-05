@@ -1,5 +1,4 @@
 import json
-from collections import defaultdict
 from datetime import datetime
 from urllib.request import urlopen
 
@@ -55,22 +54,6 @@ def create_question_value_id_map(question_data):
     return {d["question"]: d["id"] for d in question_data}
 
 
-def create_date_string_to_slot_number_map(date_strings):
-    date_string_to_slot_number_map = {}
-
-    date_to_strings_map = defaultdict(list)
-    for date_string in date_strings:
-        date = SlotFactory.date_from_string(date_string)
-        date_to_strings_map[date].append(date_string)
-
-    for date_strings in date_to_strings_map.values():
-        date_string_to_slot_number_map.update(
-            {s: i for i, s in enumerate(sorted(date_strings), start=1)}
-        )
-
-    return date_string_to_slot_number_map
-
-
 def calculate_duration_min(start: str, end: str) -> int:
     start_datetime = datetime.strptime(start, SESSIONIZE_DATETIME_FORMAT)
     end_datetime = datetime.strptime(end, SESSIONIZE_DATETIME_FORMAT)
@@ -85,7 +68,7 @@ def create_talks_from_data(data):
     question_value_id_map = create_question_value_id_map(data["questions"])
 
     sessions = list(filter_sessions(data["sessions"]))
-    start_to_slot_number_map = create_date_string_to_slot_number_map(
+    start_to_slot_number_map = SlotFactory._create_start_to_slot_number_map(
         set(s["startsAt"] for s in _filter_with_modal_sessions(sessions))
     )
     talks = []
