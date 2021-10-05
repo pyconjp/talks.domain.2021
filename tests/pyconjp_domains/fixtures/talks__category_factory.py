@@ -66,10 +66,16 @@ item_id_to_name = {
     80032: "Slide Language2",
 }
 
-create_parameters = ([], [80004, 80013, 80021, 80032], [80013, 80022])
+create_parameters = (
+    ([], False),
+    ([80004, 80013, 80021, 80032], False),
+    ([80013, 80022], False),
+    ([80022, 80032], True),
+)
 
 create_expecteds = (
     Category(None, None, None, None),
     Category("Track4", "Level3", "Language1", "Slide Language2"),
     Category(None, "Level3", "Language2", None),
+    Category(None, "All", "Language2", "Slide Language2"),
 )

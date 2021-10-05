@@ -68,7 +68,7 @@ class CategoryFactoryTestCase(TestCase):
 
         for parameter, expected in zip(create_parameters, create_expecteds):
             with self.subTest(parameter=parameter, expected=expected):
-                actual = sut.create(parameter)
+                actual = sut.create(*parameter)
 
                 self.assertEqual(actual, expected)
 
