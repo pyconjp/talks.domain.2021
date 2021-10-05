@@ -378,6 +378,21 @@ class SlotTestCase(TestCase):
         self.assertEqual(actual, expected)
 
 
+class SlotFactoryTestCase(TestCase):
+    def test_init(self):
+        room_id_to_name = {20010: "#pyconjp", 20001: "#pyconjp_1"}
+        start_to_slot_number = {
+            "2021-10-15T13:00:00": 1,
+            "2021-10-15T13:30:00": 2,
+            "2021-10-15T14:30:00": 3,
+        }
+
+        actual = t.SlotFactory(room_id_to_name, start_to_slot_number)
+
+        self.assertEqual(actual._room_id_to_name, room_id_to_name)
+        self.assertEqual(actual._start_to_slot_number, start_to_slot_number)
+
+
 class ScheduledTalksTestCase(TestCase):
     def test_sorted(self):
         from .fixtures.talks__scheduled_talks__sorted import expected, talks

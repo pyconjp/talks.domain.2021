@@ -262,6 +262,10 @@ class Slot:
         return cls(room, start_datetime.date(), start_datetime.time(), number)
 
 
+class SlotFactory:
+    pass
+
+
 @dataclass
 class ScheduledTalk(Talk):
     slot: Slot
