@@ -2,6 +2,7 @@ import json
 from datetime import datetime
 from urllib.request import urlopen
 
+from pyconjp_domains.constants import SESSIONIZE_DATETIME_FORMAT
 from pyconjp_domains.talks import (
     CategoryFactory,
     QuestionAnswer,
@@ -10,8 +11,6 @@ from pyconjp_domains.talks import (
     SlotFactory,
     Speaker,
 )
-
-SESSIONIZE_DATETIME_FORMAT = "%Y-%m-%dT%H:%M:%S"
 
 
 def fetch_data(url):

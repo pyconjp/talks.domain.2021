@@ -5,7 +5,7 @@ from collections.abc import Sequence
 from dataclasses import dataclass
 from datetime import date, datetime, time
 
-SESSIONIZE_DATETIME_FORMAT = "%Y-%m-%dT%H:%M:%S"
+from pyconjp_domains.constants import SESSIONIZE_DATETIME_FORMAT
 
 
 def get_single_choice_category_value(category: dict) -> str:
@@ -260,7 +260,7 @@ class Slot:
     @classmethod
     def create(cls, room: str, start_datetime_str: str, number: int):
         start_datetime = datetime.strptime(
-            start_datetime_str, "%Y-%m-%dT%H:%M:%S"
+            start_datetime_str, SESSIONIZE_DATETIME_FORMAT
         )
         return cls(room, start_datetime.date(), start_datetime.time(), number)
 
