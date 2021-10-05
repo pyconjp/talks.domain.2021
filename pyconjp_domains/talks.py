@@ -1,8 +1,11 @@
 from __future__ import annotations
 
+from collections import defaultdict
 from collections.abc import Sequence
 from dataclasses import dataclass
 from datetime import date, datetime, time
+
+SESSIONIZE_DATETIME_FORMAT = "%Y-%m-%dT%H:%M:%S"
 
 
 def get_single_choice_category_value(category: dict) -> str:
@@ -276,7 +279,35 @@ class SlotFactory:
 
     @classmethod
     def from_(cls, rooms_raw_data, starts_at_strings) -> SlotFactory:
-        raise NotImplementedError
+        room_id_to_name = cls._create_room_id_to_name_map(rooms_raw_data)
+        start_to_slot_number = cls._create_start_to_slot_number_map(
+            starts_at_strings
+        )
+        return cls(room_id_to_name, start_to_slot_number)
+
+    @staticmethod
+    def date_from_string(string):
+        return datetime.strptime(string, SESSIONIZE_DATETIME_FORMAT).date()
+
+    @staticmethod
+    def _create_room_id_to_name_map(rooms_raw_data):
+        return {d["id"]: d["name"] for d in rooms_raw_data}
+
+    @staticmethod
+    def _create_start_to_slot_number_map(starts_at_strings):
+        date_string_to_slot_number_map = {}
+
+        date_to_strings_map = defaultdict(list)
+        for date_string in starts_at_strings:
+            date = SlotFactory.date_from_string(date_string)
+            date_to_strings_map[date].append(date_string)
+
+        for date_strings in date_to_strings_map.values():
+            date_string_to_slot_number_map.update(
+                {s: i for i, s in enumerate(sorted(date_strings), start=1)}
+            )
+
+        return date_string_to_slot_number_map
 
 
 @dataclass
