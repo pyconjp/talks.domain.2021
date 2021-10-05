@@ -9,6 +9,7 @@ from pyconjp_domains.talks import (
     ScheduledTalk,
     ScheduledTalks,
     Slot,
+    SlotFactory,
     Speaker,
 )
 
@@ -54,16 +55,12 @@ def create_question_value_id_map(question_data):
     return {d["question"]: d["id"] for d in question_data}
 
 
-def date_from_string(string):
-    return datetime.strptime(string, SESSIONIZE_DATETIME_FORMAT).date()
-
-
 def create_date_string_to_slot_number_map(date_strings):
     date_string_to_slot_number_map = {}
 
     date_to_strings_map = defaultdict(list)
     for date_string in date_strings:
-        date = date_from_string(date_string)
+        date = SlotFactory.date_from_string(date_string)
         date_to_strings_map[date].append(date_string)
 
     for date_strings in date_to_strings_map.values():

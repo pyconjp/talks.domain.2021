@@ -432,6 +432,16 @@ class SlotFactoryTestCase(TestCase):
             actual._start_to_slot_number, self.start_to_slot_number
         )
 
+    def test_date_from_string(self):
+        strings = ["2021-10-15T15:00:00", "2021-10-16T15:50:00"]
+        expected_dates = [date(2021, 10, 15), date(2021, 10, 16)]
+
+        for string, expected in zip(strings, expected_dates):
+            with self.subTest(string=string, expected=expected):
+                actual = t.SlotFactory.date_from_string(string)
+
+                self.assertEqual(actual, expected)
+
 
 class ScheduledTalksTestCase(TestCase):
     def test_sorted(self):
