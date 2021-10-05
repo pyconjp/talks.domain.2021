@@ -7,7 +7,6 @@ from pyconjp_domains.talks import (
     QuestionAnswer,
     ScheduledTalk,
     ScheduledTalks,
-    Slot,
     SlotFactory,
     Speaker,
 )
@@ -42,10 +41,6 @@ def _filter_with_modal_sessions(sessions):
             yield session
 
 
-def create_room_id_name_map(room_data):
-    return {d["id"]: d["name"] for d in room_data}
-
-
 def create_speaker_id_map(speaker_data):
     return {d["id"]: Speaker(d["fullName"], d["bio"]) for d in speaker_data}
 
@@ -62,23 +57,18 @@ def calculate_duration_min(start: str, end: str) -> int:
 
 
 def create_talks_from_data(data):
-    room_id_name_map = create_room_id_name_map(data["rooms"])
     speaker_id_map = create_speaker_id_map(data["speakers"])
     category_factory = CategoryFactory.from_(data["categories"])
     question_value_id_map = create_question_value_id_map(data["questions"])
 
     sessions = list(filter_sessions(data["sessions"]))
-    start_to_slot_number_map = SlotFactory._create_start_to_slot_number_map(
-        set(s["startsAt"] for s in _filter_with_modal_sessions(sessions))
+    slot_factory = SlotFactory.from_(
+        data["rooms"],
+        set(s["startsAt"] for s in _filter_with_modal_sessions(sessions)),
     )
     talks = []
     for session in sessions:
-        slot = Slot.create(
-            room_id_name_map[session["roomId"]],
-            session["startsAt"],
-            # モーダル表示しないトークは、CSVのno (=talk.slot_number) を0にする
-            start_to_slot_number_map.get(session["startsAt"], 0),
-        )
+        slot = slot_factory.create(session["startsAt"], session["roomId"])
         duration_min = calculate_duration_min(
             session["startsAt"], session["endsAt"]
         )

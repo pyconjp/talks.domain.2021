@@ -274,6 +274,7 @@ class SlotFactory:
         return Slot.create(
             self._room_id_to_name[room_id],
             starts_at,
+            # モーダル表示しないトークは、CSVのno (=talk.slot_number) を0にする
             self._start_to_slot_number.get(starts_at, 0),
         )
 
