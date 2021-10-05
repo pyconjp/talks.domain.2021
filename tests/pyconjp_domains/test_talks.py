@@ -381,12 +381,13 @@ class SlotTestCase(TestCase):
 
 class SlotFactoryTestCase(TestCase):
     def setUp(self):
-        self.room_id_to_name = {20010: "#pyconjp", 20001: "#pyconjp_1"}
-        self.starts_at_to_slot_number = {
-            "2021-10-15T13:00:00": 1,
-            "2021-10-15T13:30:00": 2,
-            "2021-10-15T14:30:00": 3,
-        }
+        from .fixtures.talks__slot_factory import (
+            room_id_to_name,
+            starts_at_to_slot_number,
+        )
+
+        self.room_id_to_name = room_id_to_name
+        self.starts_at_to_slot_number = starts_at_to_slot_number
 
     def test_init(self):
         actual = t.SlotFactory(
@@ -400,29 +401,24 @@ class SlotFactoryTestCase(TestCase):
 
     @patch("pyconjp_domains.talks.Slot.create")
     def test_create(self, slot_create):
+        from .fixtures.talks__slot_factory import (
+            create_assert_calls,
+            create_parameters,
+        )
+
         sut = t.SlotFactory(
             self.room_id_to_name, self.starts_at_to_slot_number
         )
-        starts_at = "2021-10-15T13:30:00"
-        room_id = 20010
 
-        actual = sut.create(starts_at, room_id)
+        for parameter, assert_call in zip(
+            create_parameters, create_assert_calls
+        ):
+            with self.subTest(parameter=parameter, assert_call=assert_call):
+                actual = sut.create(*parameter)
 
-        self.assertEqual(actual, slot_create.return_value)
-        slot_create.assert_called_once_with("#pyconjp", starts_at, 2)
-
-    @patch("pyconjp_domains.talks.Slot.create")
-    def test_create_key_error_starts_at(self, slot_create):
-        sut = t.SlotFactory(
-            self.room_id_to_name, self.starts_at_to_slot_number
-        )
-        starts_at = "2021-10-15T12:30:00"
-        room_id = 20001
-
-        actual = sut.create(starts_at, room_id)
-
-        self.assertEqual(actual, slot_create.return_value)
-        slot_create.assert_called_once_with("#pyconjp_1", starts_at, 0)
+                self.assertEqual(actual, slot_create.return_value)
+                slot_create.assert_called_once_with(*assert_call)
+                slot_create.reset_mock()
 
     def test_from_(self):
         from .fixtures.talks__slot_factory import (
