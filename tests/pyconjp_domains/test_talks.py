@@ -1,6 +1,5 @@
 from datetime import date, time
 from unittest import TestCase
-from unittest.mock import patch
 
 from pyconjp_domains import talks as t
 
@@ -375,94 +374,6 @@ class SlotTestCase(TestCase):
         expected = t.Slot("the_room", date(2021, 10, 15), time(15, 0), 2)
 
         actual = t.Slot.create("the_room", start_datetime_str, 2)
-
-        self.assertEqual(actual, expected)
-
-
-class SlotFactoryTestCase(TestCase):
-    def setUp(self):
-        from .fixtures.talks__slot_factory import (
-            room_id_to_name,
-            starts_at_to_slot_number,
-        )
-
-        self.room_id_to_name = room_id_to_name
-        self.starts_at_to_slot_number = starts_at_to_slot_number
-
-    def test_init(self):
-        actual = t.SlotFactory(
-            self.room_id_to_name, self.starts_at_to_slot_number
-        )
-
-        self.assertEqual(actual._room_id_to_name, self.room_id_to_name)
-        self.assertEqual(
-            actual._starts_at_to_slot_number, self.starts_at_to_slot_number
-        )
-
-    @patch("pyconjp_domains.talks.Slot.create")
-    def test_create(self, slot_create):
-        from .fixtures.talks__slot_factory import (
-            create_assert_calls,
-            create_parameters,
-        )
-
-        sut = t.SlotFactory(
-            self.room_id_to_name, self.starts_at_to_slot_number
-        )
-
-        for parameter, assert_call in zip(
-            create_parameters, create_assert_calls
-        ):
-            with self.subTest(parameter=parameter, assert_call=assert_call):
-                actual = sut.create(*parameter)
-
-                self.assertEqual(actual, slot_create.return_value)
-                slot_create.assert_called_once_with(*assert_call)
-                slot_create.reset_mock()
-
-    def test_from_(self):
-        from .fixtures.talks__slot_factory import (
-            rooms_raw_data,
-            starts_at_strings,
-        )
-
-        actual = t.SlotFactory.from_(rooms_raw_data, starts_at_strings)
-
-        self.assertIsInstance(actual, t.SlotFactory)
-        self.assertEqual(actual._room_id_to_name, self.room_id_to_name)
-        self.assertEqual(
-            actual._starts_at_to_slot_number, self.starts_at_to_slot_number
-        )
-
-    def test_date_from_string(self):
-        strings = ["2021-10-15T15:00:00", "2021-10-16T15:50:00"]
-        expected_dates = [date(2021, 10, 15), date(2021, 10, 16)]
-
-        for string, expected in zip(strings, expected_dates):
-            with self.subTest(string=string, expected=expected):
-                actual = t.SlotFactory.date_from_string(string)
-
-                self.assertEqual(actual, expected)
-
-    def test__create_datetime_string_to_slot_number_map(self):
-        datetime_strings = set(
-            [
-                "2021-10-15T15:00:00",
-                "2021-10-15T16:00:00",
-                "2021-10-16T15:50:00",
-                "2021-10-16T13:50:00",
-            ]
-        )
-        expected = {
-            "2021-10-15T15:00:00": 1,
-            "2021-10-15T16:00:00": 2,
-            "2021-10-16T13:50:00": 1,
-            "2021-10-16T15:50:00": 2,
-        }
-
-        actual = t.SlotFactory._create_datetime_string_to_slot_number_map(
-            datetime_strings
-        )
 
         self.assertEqual(actual, expected)
 
