@@ -59,7 +59,7 @@ class CategoryFactory:
         self._item_id_to_category_title = item_id_to_category_title
         self._item_id_to_name = item_id_to_name
 
-    def create(self, values: list[int]) -> Category:
+    def create(self, values: list[int], is_plenary: bool) -> Category:
         track, level = None, None
         speaking_language, slide_language = None, None
         for value in values:
@@ -72,6 +72,7 @@ class CategoryFactory:
                 speaking_language = self._item_id_to_name[value]
             elif category == "発表資料の言語 / Language of presentation material":
                 slide_language = self._item_id_to_name[value]
+        level = "All" if is_plenary else level
         return Category(track, level, speaking_language, slide_language)
 
     @classmethod
