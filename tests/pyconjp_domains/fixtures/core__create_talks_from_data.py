@@ -4,7 +4,7 @@ Venue open / 開場  # 注: モーダルを出さないのでSlot.numberは振�
 
 Opening (Day 1)
 
-Keynote: Day 1 キーノートスピーカー
+Keynote: Day 1 by Keynote Speaker
 
 トーク3, トーク2  # 注: id順なので返り値はトーク2, トーク3の順
 
@@ -30,6 +30,7 @@ speaker2_uuid = "f3777251-0201-4048-abaa-1d234700e441"
 speaker3_uuid = "1b8d29d9-81c4-43a0-8794-76799d1a4abc"
 speaker4_uuid = "0ead2886-0db3-44f2-ae29-2c2240adfc6b"
 speaker_with_name_uuid = "89546ef4-c434-4bb9-b0ba-8162d07d5e03"
+keynote_speaker_uuid = "8d735464-050b-4cfa-8786-22b93f282204"
 
 data = {
     "sessions": [
@@ -40,6 +41,7 @@ data = {
             "startsAt": "2021-10-15T12:30:00",
             "endsAt": "2021-10-15T13:00:00",
             "isServiceSession": True,
+            "isPlenumSession": True,
             "speakers": [],
             "categoryItems": [],
             "questionAnswers": [],
@@ -54,6 +56,7 @@ data = {
             "startsAt": "2021-10-15T13:00:00",
             "endsAt": "2021-10-15T13:30:00",
             "isServiceSession": True,
+            "isPlenumSession": True,
             "speakers": [],
             "categoryItems": [],
             "questionAnswers": [],
@@ -62,16 +65,18 @@ data = {
             "recordingUrl": None,
         },
         {
-            # TODO: service sessionでないsessionに変える可能性あり
             "id": keynote_uuid,
-            "title": "Keynote: Day 1 キーノートスピーカー",
+            "title": "Keynote: Day 1 by Keynote Speaker",
             "description": "〇〇で有名な氏による基調講演です",
             "startsAt": "2021-10-15T13:30:00",
             "endsAt": "2021-10-15T14:30:00",
-            "isServiceSession": True,
-            "speakers": [],
-            "categoryItems": [],
-            "questionAnswers": [],
+            "isServiceSession": False,
+            "isPlenumSession": True,
+            "speakers": [keynote_speaker_uuid],
+            "categoryItems": [80022, 80025],
+            "questionAnswers": [
+                {"questionId": 30014, "answerValue": "日本語に同時通訳されます"}
+            ],
             "roomId": 20030,
             "liveUrl": None,
             "recordingUrl": None,
@@ -83,6 +88,7 @@ data = {
             "startsAt": "2021-10-15T15:00:00",
             "endsAt": "2021-10-15T15:30:00",
             "isServiceSession": False,
+            "isPlenumSession": False,
             "speakers": [speaker2_uuid],
             "categoryItems": [80045, 80019, 80023, 80024],
             "questionAnswers": [
@@ -101,6 +107,7 @@ data = {
             "startsAt": "2021-10-15T15:00:00",
             "endsAt": "2021-10-15T15:30:00",
             "isServiceSession": False,
+            "isPlenumSession": False,
             "speakers": [speaker3_uuid],
             "categoryItems": [80046, 80020, 80023, 80026],
             "questionAnswers": [
@@ -119,6 +126,7 @@ data = {
             "startsAt": "2021-10-15T17:00:00",
             "endsAt": "2021-10-15T17:30:00",
             "isServiceSession": False,
+            "isPlenumSession": False,
             "speakers": [speaker1_uuid],
             "categoryItems": [80047, 80018, 80022, 80025],
             "questionAnswers": [
@@ -137,6 +145,7 @@ data = {
             "startsAt": "2021-10-15T17:00:00",
             "endsAt": "2021-10-15T17:30:00",
             "isServiceSession": False,
+            "isPlenumSession": False,
             "speakers": [speaker4_uuid],
             "categoryItems": [80043, 80019, 80023, 80026],
             "questionAnswers": [
@@ -155,6 +164,7 @@ data = {
             "startsAt": "2021-10-15T17:30:00",
             "endsAt": "2021-10-15T18:30:00",
             "isServiceSession": False,
+            "isPlenumSession": False,
             "speakers": [speaker_with_name_uuid],
             # スタッフアカウントが作るSessionではオプションなので長さが短くなる
             "categoryItems": [80023, 80026],
@@ -172,6 +182,7 @@ data = {
             "startsAt": "2021-10-15T18:45:00",
             "endsAt": "2021-10-15T19:00:00",
             "isServiceSession": True,
+            "isPlenumSession": True,
             "speakers": [],
             "categoryItems": [],
             "questionAnswers": [],
@@ -189,6 +200,11 @@ data = {
             "id": speaker_with_name_uuid,
             "bio": None,
             "fullName": "アカウントなしスピーカー",
+        },
+        {
+            "id": keynote_speaker_uuid,
+            "bio": "https://pyconjp.blogspot.com/",
+            "fullName": "Keynote Speaker",
         },
     ],
     "questions": [
@@ -278,11 +294,11 @@ expected = t.ScheduledTalks(
         ),
         t.ScheduledTalk(
             keynote_uuid,
-            "Keynote: Day 1 キーノートスピーカー",
+            "Keynote: Day 1 by Keynote Speaker",
             "〇〇で有名な氏による基調講演です",
-            None,
-            None,
-            [],
+            t.Category(None, "All", "English", "English only"),
+            t.QuestionAnswer("日本語に同時通訳されます", None, None),
+            [t.Speaker("Keynote Speaker", "https://pyconjp.blogspot.com/")],
             t.Slot("#pyconjp", the_day, time(13, 30), 2),
             60,
         ),
