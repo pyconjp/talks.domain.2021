@@ -41,6 +41,54 @@ def parse_field_arguments(arguments):
     return fields, headers
 
 
+class FieldProcessor:
+    def __init__(self, index, func):
+        self.index = index
+        self.func = func
+
+    def __call__(self, row):
+        row[self.index] = self.func(row[self.index])
+
+
+def bundle_processors(fields):
+    processors = []
+    if "day" in fields:
+        processors.append(
+            FieldProcessor(
+                fields.index("day"), lambda day: day.strftime("%m/%d")
+            )
+        )
+    if "start_time" in fields:
+        processors.append(
+            FieldProcessor(
+                fields.index("start_time"), lambda time: time.strftime("%H:%M")
+            )
+        )
+    if "slot_number" in fields:
+        processors.append(
+            FieldProcessor(
+                fields.index("slot_number"),
+                lambda number: None if number == 0 else number,
+            ),
+        )
+    if "speaker_names" in fields:
+        processors.append(
+            FieldProcessor(
+                fields.index("speaker_names"),
+                lambda names: ", ".join(names),  # スピーカーが2人以上の場合は区切る
+            )
+        )
+    if "speaker_profiles" in fields:
+        processors.append(
+            FieldProcessor(
+                fields.index("speaker_profiles"),
+                # Noneはjoinできないので、空文字列に変換する
+                lambda profiles: "\n\n".join(v or "" for v in profiles),
+            )
+        )
+    return processors
+
+
 def retrieve_talks_in_timetable(output, field_arguments):
     endpoint_id = os.environ["ENDPOINT_ID"]
     url = f"https://sessionize.com/api/v2/{endpoint_id}/view/All"
@@ -50,13 +98,11 @@ def retrieve_talks_in_timetable(output, field_arguments):
 
     rows = [talk.as_list(fields) for talk in talks.sorted()]
 
+    processors = bundle_processors(fields)
+
     for row in rows:
-        row[3] = row[3].strftime("%m/%d")
-        row[4] = row[4].strftime("%H:%M")
-        row[5] = None if row[5] == 0 else row[5]
-        row[-2] = ", ".join(row[-2])  # スピーカーが2人以上の場合は区切る
-        # Noneはjoinできないので、空文字列に変換する
-        row[-1] = "\n\n".join(v or "" for v in row[-1])
+        for processor in processors:
+            processor(row)
 
     with open(output, "w", encoding="utf-8") as f:
         writer = csv.writer(f)
