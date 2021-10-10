@@ -8,8 +8,13 @@ from pyconjp_domains.core import fetch_talks
 def parse_field_arguments(arguments):
     fields, headers = (), ()
     for argument in arguments:
-        fields += (argument,)
-        headers += (argument,)
+        splitted = argument.split(" AS ")
+        if len(splitted) == 1:
+            fields += (argument,)
+            headers += (argument,)
+        elif len(splitted) == 2:
+            fields += (splitted[0],)
+            headers += (splitted[1],)
     return fields, headers
 
 
