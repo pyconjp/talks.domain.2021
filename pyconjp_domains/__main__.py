@@ -6,7 +6,11 @@ from pyconjp_domains.core import fetch_talks
 
 
 def parse_field_arguments(arguments):
-    raise NotImplementedError
+    fields, headers = (), ()
+    for argument in arguments:
+        fields += (argument,)
+        headers += (argument,)
+    return fields, headers
 
 
 def retrieve_talks_in_timetable(output):
