@@ -5,6 +5,10 @@ import os
 from pyconjp_domains.core import fetch_talks
 
 
+def parse_field_arguments(arguments):
+    raise NotImplementedError
+
+
 def retrieve_talks_in_timetable(output):
     endpoint_id = os.environ["ENDPOINT_ID"]
     url = f"https://sessionize.com/api/v2/{endpoint_id}/view/All"
