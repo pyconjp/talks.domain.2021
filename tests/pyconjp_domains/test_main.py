@@ -14,3 +14,14 @@ class ParseFieldArgumentsTestCase(TestCase):
             ("id", "title", "slot_number"),
         )
         self.assertEqual(actual, expected)
+
+    def test_alias(self):
+        arguments = ["id", "slot_number AS no", "speaker_names AS name"]
+
+        actual = m.parse_field_arguments(arguments)
+
+        expected = (
+            ("id", "slot_number", "speaker_names"),
+            ("id", "no", "name"),
+        )
+        self.assertEqual(actual, expected)
