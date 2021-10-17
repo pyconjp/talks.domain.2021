@@ -12,3 +12,9 @@ question_answers_data = [
     {"questionId": 30341, "answerValue": "前提知識"},
 ]
 create_expected = QuestionAnswer("エレベータピッチ", "前提知識", "持ち帰れるもの")
+
+questions_raw_data = [
+    {"id": 30316, "question": "Elevator Pitch"},
+    {"id": 30327, "question": "オーディエンスが持って帰れる具体的な知識やノウハウ"},
+    {"id": 30341, "question": "オーディエンスに求める前提知識"},
+]

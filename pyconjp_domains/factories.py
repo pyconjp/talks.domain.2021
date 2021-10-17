@@ -72,6 +72,10 @@ class QuestionAnswerFactory:
         )
         return QuestionAnswer(elevator_pitch, prior_knowledge, take_away)
 
+    @classmethod
+    def from_(cls, questions_raw_data) -> QuestionAnswerFactory:
+        raise NotImplementedError
+
 
 class SlotFactory:
     def __init__(self, room_id_to_name, starts_at_to_slot_number):

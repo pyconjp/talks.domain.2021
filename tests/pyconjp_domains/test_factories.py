@@ -80,6 +80,18 @@ class QuestionAnswerFactoryTestCase(TestCase):
 
         self.assertEqual(actual, create_expected)
 
+    def test_from_(self):
+        from .fixtures.factories__question_answer_factory import (
+            questions_raw_data,
+        )
+
+        actual = f.QuestionAnswerFactory.from_(questions_raw_data)
+
+        self.assertIsInstance(actual, f.QuestionAnswerFactory)
+        self.assertEqual(
+            actual._question_value_to_id_map, self.question_value_to_id_map
+        )
+
 
 class SlotFactoryTestCase(TestCase):
     def setUp(self):
