@@ -111,3 +111,7 @@ class SpeakerFactory:
     def create(self, speaker_id: str) -> Speaker:
         speaker_data = self._id_to_raw_data_map[speaker_id]
         return Speaker(speaker_data["fullName"], speaker_data["bio"])
+
+    @classmethod
+    def from_(cls, speakers_raw_data) -> SpeakerFactory:
+        raise NotImplementedError

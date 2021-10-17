@@ -163,3 +163,11 @@ class SpeakerFactoryTestCase(TestCase):
         actual = sut.create(create_target_id)
 
         self.assertEqual(actual, create_expected)
+
+    def test_from_(self):
+        from .fixtures.factories__speaker_factory import speakers_raw_data
+
+        actual = f.SpeakerFactory.from_(speakers_raw_data)
+
+        self.assertIsInstance(actual, f.SpeakerFactory)
+        self.assertEqual(actual._id_to_raw_data_map, self.id_to_raw_data_map)
