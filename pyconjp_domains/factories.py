@@ -4,7 +4,13 @@ from collections import defaultdict
 from datetime import date, datetime
 
 from pyconjp_domains.constants import SESSIONIZE_DATETIME_FORMAT
-from pyconjp_domains.talks import Category, QuestionAnswer, Slot, Speaker
+from pyconjp_domains.talks import (
+    Category,
+    QuestionAnswer,
+    ScheduledTalk,
+    Slot,
+    Speaker,
+)
 
 
 class CategoryFactory:
@@ -157,3 +163,6 @@ class ScheduledTalkFactory:
         self._question_answer_factory = question_answer_factory
         self._speaker_factory = speaker_factory
         self._slot_factory = slot_factory
+
+    def create(self, session) -> ScheduledTalk:
+        raise NotImplementedError

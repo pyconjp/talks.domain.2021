@@ -3,6 +3,7 @@ from unittest import TestCase
 from unittest.mock import MagicMock, patch
 
 from pyconjp_domains import factories as f
+from pyconjp_domains.talks import ScheduledTalk
 
 
 class CategoryFactoryTestCase(TestCase):
@@ -236,3 +237,26 @@ class ScheduledTalkFactoryTestCase(TestCase):
         )
         self.assertEqual(actual._speaker_factory, self.speaker_factory)
         self.assertEqual(actual._slot_factory, self.slot_factory)
+
+    @patch("pyconjp_domains.core.calculate_duration_min")
+    def test_create_service_session(self, calculate_duration_min):
+        from .fixtures.factories__scheduled_talk_factory import (
+            expected_service_session_kwargs,
+            service_session_data,
+        )
+
+        expected = ScheduledTalk(
+            **expected_service_session_kwargs,
+            slot=self.slot_factory.create.return_value,
+            duration_min=calculate_duration_min.return_value,
+        )
+
+        actual = self.sut.create(service_session_data)
+
+        self.assertEqual(actual, expected)
+        self.slot_factory.create.assert_called_once_with(
+            service_session_data["startsAt"], service_session_data["roomId"]
+        )
+        calculate_duration_min.assert_called_once_with(
+            service_session_data["startsAt"], service_session_data["endsAt"]
+        )
