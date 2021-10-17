@@ -2,7 +2,7 @@ from setuptools import find_packages, setup
 
 setup(
     name="pyconjp_domains",
-    version="0.2.0",
+    version="0.2.1",
     packages=find_packages(exclude=["tests.*", "tests"]),
     python_requires=">=3.7",
     classifiers=[
@@ -12,6 +12,7 @@ setup(
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
     ],
     extras_require={
         "dev": ["black", "flake8", "isort", "pytest", "pytest-randomly"]
