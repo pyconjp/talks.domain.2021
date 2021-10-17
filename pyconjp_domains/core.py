@@ -3,13 +3,12 @@ from datetime import datetime
 from urllib.request import urlopen
 
 from pyconjp_domains.constants import SESSIONIZE_DATETIME_FORMAT
-from pyconjp_domains.factories import CategoryFactory, SlotFactory
-from pyconjp_domains.talks import (
-    QuestionAnswer,
-    ScheduledTalk,
-    ScheduledTalks,
-    Speaker,
+from pyconjp_domains.factories import (
+    CategoryFactory,
+    SlotFactory,
+    SpeakerFactory,
 )
+from pyconjp_domains.talks import QuestionAnswer, ScheduledTalk, ScheduledTalks
 
 
 def fetch_data(url):
@@ -39,10 +38,6 @@ def _filter_with_modal_sessions(sessions):
             yield session
 
 
-def create_speaker_id_map(speaker_data):
-    return {d["id"]: Speaker(d["fullName"], d["bio"]) for d in speaker_data}
-
-
 def create_question_value_id_map(question_data):
     return {d["question"]: d["id"] for d in question_data}
 
@@ -55,7 +50,7 @@ def calculate_duration_min(start: str, end: str) -> int:
 
 
 def create_talks_from_data(data):
-    speaker_id_map = create_speaker_id_map(data["speakers"])
+    speaker_factory = SpeakerFactory.from_(data["speakers"])
     category_factory = CategoryFactory.from_(data["categories"])
     question_value_id_map = create_question_value_id_map(data["questions"])
 
@@ -105,7 +100,7 @@ def create_talks_from_data(data):
                     ),
                 ),
                 [
-                    speaker_id_map[speaker_id]
+                    speaker_factory.create(speaker_id)
                     for speaker_id in session["speakers"]
                 ],
                 slot,
