@@ -5,10 +5,11 @@ from urllib.request import urlopen
 from pyconjp_domains.constants import SESSIONIZE_DATETIME_FORMAT
 from pyconjp_domains.factories import (
     CategoryFactory,
+    QuestionAnswerFactory,
     SlotFactory,
     SpeakerFactory,
 )
-from pyconjp_domains.talks import QuestionAnswer, ScheduledTalk, ScheduledTalks
+from pyconjp_domains.talks import ScheduledTalk, ScheduledTalks
 
 
 def fetch_data(url):
@@ -38,10 +39,6 @@ def _filter_with_modal_sessions(sessions):
             yield session
 
 
-def create_question_value_id_map(question_data):
-    return {d["question"]: d["id"] for d in question_data}
-
-
 def calculate_duration_min(start: str, end: str) -> int:
     start_datetime = datetime.strptime(start, SESSIONIZE_DATETIME_FORMAT)
     end_datetime = datetime.strptime(end, SESSIONIZE_DATETIME_FORMAT)
@@ -52,7 +49,7 @@ def calculate_duration_min(start: str, end: str) -> int:
 def create_talks_from_data(data):
     speaker_factory = SpeakerFactory.from_(data["speakers"])
     category_factory = CategoryFactory.from_(data["categories"])
-    question_value_id_map = create_question_value_id_map(data["questions"])
+    question_answer_factory = QuestionAnswerFactory.from_(data["questions"])
 
     sessions = list(filter_sessions(data["sessions"]))
     slot_factory = SlotFactory.from_(
@@ -77,10 +74,6 @@ def create_talks_from_data(data):
                 duration_min,
             )
         else:
-            question_id_answer_map = {
-                d["questionId"]: d["answerValue"]
-                for d in session["questionAnswers"]
-            }
             talk = ScheduledTalk(
                 session["id"],
                 session["title"],
@@ -88,17 +81,7 @@ def create_talks_from_data(data):
                 category_factory.create(
                     session["categoryItems"], session["isPlenumSession"]
                 ),
-                QuestionAnswer(
-                    question_id_answer_map.get(
-                        question_value_id_map["Elevator Pitch"]
-                    ),
-                    question_id_answer_map.get(
-                        question_value_id_map["オーディエンスに求める前提知識"]
-                    ),
-                    question_id_answer_map.get(
-                        question_value_id_map["オーディエンスが持って帰れる具体的な知識やノウハウ"]
-                    ),
-                ),
+                question_answer_factory.create(session["questionAnswers"]),
                 [
                     speaker_factory.create(speaker_id)
                     for speaker_id in session["speakers"]
