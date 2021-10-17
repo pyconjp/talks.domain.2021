@@ -1,6 +1,6 @@
 from datetime import date
 from unittest import TestCase
-from unittest.mock import MagicMock, patch
+from unittest.mock import MagicMock, call, patch
 
 from pyconjp_domains import factories as f
 from pyconjp_domains.talks import ScheduledTalk
@@ -269,4 +269,41 @@ class ScheduledTalkFactoryTestCase(TestCase):
         )
         calculate_duration_min.assert_called_once_with(
             service_session_data["startsAt"], service_session_data["endsAt"]
+        )
+
+    @patch(
+        "pyconjp_domains.factories.ScheduledTalkFactory.calculate_duration_min"
+    )
+    def test_create_talk(self, calculate_duration_min):
+        from .fixtures.factories__scheduled_talk_factory import (
+            expected_talk_kwargs,
+            talk_data,
+        )
+
+        expected = ScheduledTalk(
+            **expected_talk_kwargs,
+            category=self.category_factory.create.return_value,
+            answer=self.question_answer_factory.create.return_value,
+            speakers=[self.speaker_factory.create.return_value],
+            slot=self.slot_factory.create.return_value,
+            duration_min=calculate_duration_min.return_value,
+        )
+
+        actual = self.sut.create(talk_data)
+
+        self.assertEqual(actual, expected)
+        self.category_factory.create.assert_called_once_with(
+            talk_data["categoryItems"], talk_data["isPlenumSession"]
+        )
+        self.question_answer_factory.create.assert_called_once_with(
+            talk_data["questionAnswers"]
+        )
+        self.speaker_factory.create.assert_has_calls(
+            [call(speaker_id) for speaker_id in talk_data["speakers"]]
+        )
+        self.slot_factory.create.assert_called_once_with(
+            talk_data["startsAt"], talk_data["roomId"]
+        )
+        calculate_duration_min.assert_called_once_with(
+            talk_data["startsAt"], talk_data["endsAt"]
         )
