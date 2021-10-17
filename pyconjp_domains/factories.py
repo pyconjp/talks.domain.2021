@@ -172,4 +172,19 @@ class ScheduledTalkFactory:
         return duration.seconds // 60
 
     def create(self, session) -> ScheduledTalk:
-        raise NotImplementedError
+        slot = self._slot_factory.create(
+            session["startsAt"], session["roomId"]
+        )
+        duration_min = self.calculate_duration_min(
+            session["startsAt"], session["endsAt"]
+        )
+        return ScheduledTalk(
+            session["id"],
+            session["title"],
+            session["description"],
+            None,
+            None,
+            [],
+            slot,
+            duration_min,
+        )
