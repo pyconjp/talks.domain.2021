@@ -54,7 +54,8 @@ class CategoryFactory:
 
 
 class QuestionAnswerFactory:
-    ...
+    def __init__(self, question_value_to_id_map):
+        self._question_value_to_id_map = question_value_to_id_map
 
 
 class SlotFactory:
