@@ -105,4 +105,5 @@ class SlotFactory:
 
 
 class SpeakerFactory:
-    ...
+    def __init__(self, id_to_raw_data_map):
+        self._id_to_raw_data_map = id_to_raw_data_map
