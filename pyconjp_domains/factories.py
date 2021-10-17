@@ -4,7 +4,7 @@ from collections import defaultdict
 from datetime import date, datetime
 
 from pyconjp_domains.constants import SESSIONIZE_DATETIME_FORMAT
-from pyconjp_domains.talks import Category, Slot
+from pyconjp_domains.talks import Category, Slot, Speaker
 
 
 class CategoryFactory:
@@ -107,3 +107,6 @@ class SlotFactory:
 class SpeakerFactory:
     def __init__(self, id_to_raw_data_map):
         self._id_to_raw_data_map = id_to_raw_data_map
+
+    def create(self, speaker_id: str) -> Speaker:
+        raise NotImplementedError
