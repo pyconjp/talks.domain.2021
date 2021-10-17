@@ -53,6 +53,19 @@ class CategoryFactoryTestCase(TestCase):
         self.assertEqual(actual._item_id_to_name, self.item_id_to_name)
 
 
+class QuestionAnswerFactoryTestCase(TestCase):
+    def test_init(self):
+        from .fixtures.factories__question_answer_factory import (
+            question_value_to_id_map,
+        )
+
+        actual = f.QuestionAnswerFactory(question_value_to_id_map)
+
+        self.assertEqual(
+            actual._question_value_to_id_map, question_value_to_id_map
+        )
+
+
 class SlotFactoryTestCase(TestCase):
     def setUp(self):
         from .fixtures.factories__slot_factory import (

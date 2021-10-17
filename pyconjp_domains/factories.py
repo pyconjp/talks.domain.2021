@@ -53,6 +53,10 @@ class CategoryFactory:
         }
 
 
+class QuestionAnswerFactory:
+    ...
+
+
 class SlotFactory:
     def __init__(self, room_id_to_name, starts_at_to_slot_number):
         self._room_id_to_name = room_id_to_name
