@@ -4,7 +4,7 @@ from collections import defaultdict
 from datetime import date, datetime
 
 from pyconjp_domains.constants import SESSIONIZE_DATETIME_FORMAT
-from pyconjp_domains.talks import Category, Slot, Speaker
+from pyconjp_domains.talks import Category, QuestionAnswer, Slot, Speaker
 
 
 class CategoryFactory:
@@ -56,6 +56,9 @@ class CategoryFactory:
 class QuestionAnswerFactory:
     def __init__(self, question_value_to_id_map):
         self._question_value_to_id_map = question_value_to_id_map
+
+    def create(self, question_answers_data) -> QuestionAnswer:
+        raise NotImplementedError
 
 
 class SlotFactory:
