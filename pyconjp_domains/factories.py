@@ -102,3 +102,7 @@ class SlotFactory:
             )
 
         return date_string_to_slot_number_map
+
+
+class SpeakerFactory:
+    ...
