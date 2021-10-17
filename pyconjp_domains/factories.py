@@ -164,5 +164,12 @@ class ScheduledTalkFactory:
         self._speaker_factory = speaker_factory
         self._slot_factory = slot_factory
 
+    @staticmethod
+    def calculate_duration_min(start: str, end: str) -> int:
+        start_datetime = datetime.strptime(start, SESSIONIZE_DATETIME_FORMAT)
+        end_datetime = datetime.strptime(end, SESSIONIZE_DATETIME_FORMAT)
+        duration = end_datetime - start_datetime
+        return duration.seconds // 60
+
     def create(self, session) -> ScheduledTalk:
         raise NotImplementedError

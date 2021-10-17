@@ -238,7 +238,17 @@ class ScheduledTalkFactoryTestCase(TestCase):
         self.assertEqual(actual._speaker_factory, self.speaker_factory)
         self.assertEqual(actual._slot_factory, self.slot_factory)
 
-    @patch("pyconjp_domains.core.calculate_duration_min")
+    def test_calculate_duration_min(self):
+        start = "2021-10-15T17:00:00"
+        end = "2021-10-15T17:30:00"
+
+        actual = f.ScheduledTalkFactory.calculate_duration_min(start, end)
+
+        self.assertEqual(actual, 30)
+
+    @patch(
+        "pyconjp_domains.factories.ScheduledTalkFactory.calculate_duration_min"
+    )
     def test_create_service_session(self, calculate_duration_min):
         from .fixtures.factories__scheduled_talk_factory import (
             expected_service_session_kwargs,
