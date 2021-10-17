@@ -214,22 +214,25 @@ class SpeakerFactoryTestCase(TestCase):
 
 
 class ScheduledTalkFactoryTestCase(TestCase):
+    def setUp(self):
+        self.category_factory = MagicMock(spec=f.CategoryFactory)
+        self.question_answer_factory = MagicMock(spec=f.QuestionAnswerFactory)
+        self.speaker_factory = MagicMock(spec=f.SpeakerFactory)
+        self.slot_factory = MagicMock(spec=f.SlotFactory)
+
+        self.sut = f.ScheduledTalkFactory(
+            self.category_factory,
+            self.question_answer_factory,
+            self.speaker_factory,
+            self.slot_factory,
+        )
+
     def test_init(self):
-        category_factory = MagicMock(spec=f.CategoryFactory)
-        question_answer_factory = MagicMock(spec=f.QuestionAnswerFactory)
-        speaker_factory = MagicMock(spec=f.SpeakerFactory)
-        slot_factory = MagicMock(spec=f.SlotFactory)
+        actual = self.sut
 
-        actual = f.ScheduledTalkFactory(
-            category_factory,
-            question_answer_factory,
-            speaker_factory,
-            slot_factory,
-        )
-
-        self.assertEqual(actual._category_factory, category_factory)
+        self.assertEqual(actual._category_factory, self.category_factory)
         self.assertEqual(
-            actual._question_answer_factory, question_answer_factory
+            actual._question_answer_factory, self.question_answer_factory
         )
-        self.assertEqual(actual._speaker_factory, speaker_factory)
-        self.assertEqual(actual._slot_factory, slot_factory)
+        self.assertEqual(actual._speaker_factory, self.speaker_factory)
+        self.assertEqual(actual._slot_factory, self.slot_factory)
