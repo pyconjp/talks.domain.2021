@@ -58,7 +58,19 @@ class QuestionAnswerFactory:
         self._question_value_to_id_map = question_value_to_id_map
 
     def create(self, question_answers_data) -> QuestionAnswer:
-        raise NotImplementedError
+        question_id_to_answer_map = {
+            d["questionId"]: d["answerValue"] for d in question_answers_data
+        }
+        elevator_pitch = question_id_to_answer_map.get(
+            self._question_value_to_id_map["Elevator Pitch"]
+        )
+        prior_knowledge = question_id_to_answer_map.get(
+            self._question_value_to_id_map["オーディエンスに求める前提知識"]
+        )
+        take_away = question_id_to_answer_map.get(
+            self._question_value_to_id_map["オーディエンスが持って帰れる具体的な知識やノウハウ"]
+        )
+        return QuestionAnswer(elevator_pitch, prior_knowledge, take_away)
 
 
 class SlotFactory:
