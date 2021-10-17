@@ -178,13 +178,38 @@ class ScheduledTalkFactory:
         duration_min = self.calculate_duration_min(
             session["startsAt"], session["endsAt"]
         )
+        if session["isServiceSession"]:
+            return ScheduledTalk(
+                session["id"],
+                session["title"],
+                session["description"],
+                None,
+                None,
+                [],
+                slot,
+                duration_min,
+            )
+
+        category = self._category_factory.create(
+            session["categoryItems"], session["isPlenumSession"]
+        )
+        question_answer = self._question_answer_factory.create(
+            session["questionAnswers"]
+        )
+        speakers = [
+            self._speaker_factory.create(speaker_id)
+            for speaker_id in session["speakers"]
+        ]
         return ScheduledTalk(
             session["id"],
             session["title"],
             session["description"],
-            None,
-            None,
-            [],
+            category,
+            question_answer,
+            speakers,
             slot,
             duration_min,
+            # Workaround: Use live URL as slide URL
+            session["liveUrl"],
+            session["recordingUrl"],
         )
