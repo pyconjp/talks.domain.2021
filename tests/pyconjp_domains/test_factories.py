@@ -1,6 +1,6 @@
 from datetime import date
 from unittest import TestCase
-from unittest.mock import patch
+from unittest.mock import MagicMock, patch
 
 from pyconjp_domains import factories as f
 
@@ -211,3 +211,25 @@ class SpeakerFactoryTestCase(TestCase):
 
         self.assertIsInstance(actual, f.SpeakerFactory)
         self.assertEqual(actual._id_to_raw_data_map, self.id_to_raw_data_map)
+
+
+class ScheduledTalkFactoryTestCase(TestCase):
+    def test_init(self):
+        category_factory = MagicMock(spec=f.CategoryFactory)
+        question_answer_factory = MagicMock(spec=f.QuestionAnswerFactory)
+        speaker_factory = MagicMock(spec=f.SpeakerFactory)
+        slot_factory = MagicMock(spec=f.SlotFactory)
+
+        actual = f.ScheduledTalkFactory(
+            category_factory,
+            question_answer_factory,
+            speaker_factory,
+            slot_factory,
+        )
+
+        self.assertEqual(actual._category_factory, category_factory)
+        self.assertEqual(
+            actual._question_answer_factory, question_answer_factory
+        )
+        self.assertEqual(actual._speaker_factory, speaker_factory)
+        self.assertEqual(actual._slot_factory, slot_factory)

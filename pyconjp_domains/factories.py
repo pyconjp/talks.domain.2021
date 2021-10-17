@@ -143,3 +143,7 @@ class SpeakerFactory:
     def from_(cls, speakers_raw_data) -> SpeakerFactory:
         id_to_raw_data_map = {data["id"]: data for data in speakers_raw_data}
         return cls(id_to_raw_data_map)
+
+
+class ScheduledTalkFactory:
+    ...
