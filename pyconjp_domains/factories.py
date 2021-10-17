@@ -146,4 +146,14 @@ class SpeakerFactory:
 
 
 class ScheduledTalkFactory:
-    ...
+    def __init__(
+        self,
+        category_factory: CategoryFactory,
+        question_answer_factory: QuestionAnswerFactory,
+        speaker_factory: SpeakerFactory,
+        slot_factory: SlotFactory,
+    ):
+        self._category_factory = category_factory
+        self._question_answer_factory = question_answer_factory
+        self._speaker_factory = speaker_factory
+        self._slot_factory = slot_factory
