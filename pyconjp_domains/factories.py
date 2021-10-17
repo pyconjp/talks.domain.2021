@@ -74,7 +74,10 @@ class QuestionAnswerFactory:
 
     @classmethod
     def from_(cls, questions_raw_data) -> QuestionAnswerFactory:
-        raise NotImplementedError
+        question_value_to_id_map = {
+            d["question"]: d["id"] for d in questions_raw_data
+        }
+        return cls(question_value_to_id_map)
 
 
 class SlotFactory:
